@@ -76,14 +76,37 @@ export class ZoneList {
   constructor() {
   }
 
-  public add(zone: Zone) {
+  public add(zone: Zone): void {
     this.zones.push(zone);
   }
 
   public sortByName(): void {
-    this.zones.sort((a,b) => {
+    this.zones.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
+  }
+
+  public sortByPositionIndex(): ZoneList {
+    this.zones.sort((a, b) => {
+      if (a.positionIndex > b.positionIndex) {
+        return 1;
+      } else if (a.positionIndex < b.positionIndex) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    return this;
+  }
+
+  public getByID(id: string): Zone {
+    let result = null;
+    this.zones.forEach((zone) => {
+      if (zone.id === id) {
+        result = zone;
+      }
+    });
+    return result;
   }
 
   public setSelectedByID(id: string): void {
@@ -124,7 +147,7 @@ export class ZoneList {
     const selected = [];
     this.zones.forEach((zone) => {
       if (zone.selected) {
-        selected.push({id: zone.id, selected: true})
+        selected.push({id: zone.id, selected: true, position: zone.positionIndex});
       }
     });
     localStorage.setItem('session', JSON.stringify(selected));
@@ -136,7 +159,11 @@ export class ZoneList {
       try {
         const selected = JSON.parse(session);
         selected.forEach((entry) => {
-          this.setSelectedByID(entry.id);
+          const zone = this.getByID(entry.id);
+          if (zone !== null) {
+            zone.selected = true;
+            zone.positionIndex = entry.position;
+          }
         });
       } catch (ex) {
         // ignored

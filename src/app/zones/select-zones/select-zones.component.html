@@ -11,21 +11,26 @@
 </mat-toolbar>
 
 <div>
-  <p *ngFor="let code of keyCodes">{{code}}</p>
-</div>
-
-<div>
   <div class="searchField">
   <mat-form-field class="zone-name">
     <mat-label>Name</mat-label>
-    <input matInput type="text" [(ngModel)]="zoneSearchValue" (change)="onChange($event)">
+    <label>
+      <input matInput type="text" [(ngModel)]="zoneSearchValue" (change)="onChange()">
+    </label>
     <button mat-button *ngIf="zoneSearchValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearSearchFilter()" >
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
   </div>
 
-  <div class="selection-list">
-    <app-zone-select *ngFor="let zone of filteredZones" [zone]="zone" (zoneSelected)="onZoneSelected($event)"></app-zone-select>
+  <div *ngIf="filteredZones === null">
+    <mat-spinner class="spinner-centered"></mat-spinner>
+  </div>
+
+  <div *ngIf="filteredZones !== null">
+    <div class="selection-list">
+      <app-zone-select *ngFor="let zone of filteredZones" [zone]="zone" (zoneSelected)="onZoneSelected()"></app-zone-select>
+    </div>
   </div>
 </div>
+

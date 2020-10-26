@@ -11,7 +11,9 @@
 </div>
 
 <div *ngIf="zoneList !== null">
-  <app-zone-details *ngFor="let zone of zoneList" [zone]="zone"></app-zone-details>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <app-zone-details *ngFor="let zone of selectedZoneList" [zone]="zone"></app-zone-details>
+  </div>
   <div class="select-zones">
     <button class="zone-add-button" mat-fab color="accent" aria-label="add zone" (click)="onSelectZones()">
       <mat-icon>add</mat-icon>

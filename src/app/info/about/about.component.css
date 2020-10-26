@@ -6,3 +6,6 @@
   flex: 1 1 auto;
 }
 
+a {
+  word-break: break-all;
+}

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Zone, ZoneFilter, ZoneList, ZoneNameFilter, ZoneSelectedFilter} from '../../model/zones';
 import {RKIService} from '../../services/rki-service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
@@ -10,12 +10,12 @@ import {Location} from '@angular/common';
   templateUrl: './select-zones.component.html',
   styleUrls: ['./select-zones.component.css']
 })
-export class SelectZonesComponent implements OnInit, OnDestroy {
+export class SelectZonesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   notDirty = true;
   zoneSearchValue = '';
   zoneList: ZoneList;
-  filteredZones: Array<Zone> = [];
+  filteredZones: Array<Zone> = null;
 
   keyCodes = [];
 
@@ -30,10 +30,6 @@ export class SelectZonesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.rkiService.getZones().subscribe((zoneList) => {
-      this.zoneList = zoneList;
-      this.onFilter();
-    });
   }
 
   onFilter(): void {
@@ -41,11 +37,7 @@ export class SelectZonesComponent implements OnInit, OnDestroy {
   }
 
   onToggleList(event: MatSlideToggleChange): void {
-    if (event.checked === true) {
-      this.selectedFilter.enabled = true;
-    } else {
-      this.selectedFilter.enabled = false;
-    }
+    this.selectedFilter.enabled = event.checked === true;
     this.onFilter();
   }
 
@@ -53,7 +45,7 @@ export class SelectZonesComponent implements OnInit, OnDestroy {
     this.zoneList.save();
   }
 
-  onChange(event: InputEvent): void {
+  onChange(): void {
     this.nameFilter.enabled = true;
     this.nameFilter.filterValue = this.zoneSearchValue.toLocaleLowerCase();
     this.onFilter();
@@ -74,8 +66,15 @@ export class SelectZonesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
-  onZoneSelected(flag: boolean): void {
+  onZoneSelected(): void {
     this.notDirty = false;
+  }
+
+  ngAfterViewInit(): void {
+    this.rkiService.getZones().subscribe((zoneList) => {
+      this.zoneList = zoneList;
+      this.onFilter();
+    });
   }
 
 }

@@ -26,6 +26,8 @@ import {MatInputModule} from '@angular/material/input';
 import { AboutComponent } from './info/about/about.component';
 import {SafeHtmlPipe} from './pipes/safe-html.pipe';
 import {HelpService} from './services/help-service';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import {HelpService} from './services/help-service';
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatInputModule,
+    DragDropModule,
+    MatSnackBarModule,
   ],
   providers: [
     RKIService,

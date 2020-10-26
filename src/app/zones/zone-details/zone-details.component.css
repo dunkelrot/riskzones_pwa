@@ -1,6 +1,7 @@
 .zone-card {
   margin: 0.4em;
   color: dimgrey;
+  background-color: white;
   border: 1px solid gainsboro;
   padding: 0.4em;
   box-shadow: 0 2px 2px gainsboro;
@@ -32,5 +33,13 @@
 .zone-details {
   display: flex;
   flex-direction: row;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.drag-handle {
+  margin-right: 1em;
 }
 
