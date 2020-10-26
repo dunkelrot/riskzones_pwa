@@ -1,0 +1,36 @@
+.zone-card {
+  margin: 0.4em;
+  color: dimgrey;
+  border: 1px solid gainsboro;
+  padding: 0.4em;
+  box-shadow: 0 2px 2px gainsboro;
+}
+
+.cases-big {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  font-size: 2em;
+}
+
+.time-small {
+  font-size: 0.6em;
+}
+
+.region {
+  font-size: 0.8em;
+}
+
+.zone {
+  font-size: 1.2em;
+}
+
+.color-box {
+  min-width: 2em;
+  margin-right: 0.4em;
+}
+
+.zone-details {
+  display: flex;
+  flex-direction: row;
+}
+

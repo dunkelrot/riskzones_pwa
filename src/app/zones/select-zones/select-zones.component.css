@@ -1,0 +1,22 @@
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.zone-name {
+  padding: 0.6em;
+  width:95%;
+}
+
+.searchField {
+  width:100%;
+}
+
+.selection-list {
+
+}
+
+.tb-toggle {
+  margin-right: 0.4em;
+  margin-left: 0.4em;
+}

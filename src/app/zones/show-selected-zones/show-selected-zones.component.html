@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <span>Covid-19 Risikogebiete</span>
+  <span class="spacer"></span>
+  <span class="tb-actions">
+    <button mat-button (click)="onAbout()"><mat-icon>info</mat-icon></button>
+  </span>
+</mat-toolbar>
+
+<div *ngIf="zoneList === null">
+  <mat-spinner class="spinner-centered"></mat-spinner>
+</div>
+
+<div *ngIf="zoneList !== null">
+  <app-zone-details *ngFor="let zone of zoneList" [zone]="zone"></app-zone-details>
+  <div class="select-zones">
+    <button class="zone-add-button" mat-fab color="accent" aria-label="add zone" (click)="onSelectZones()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

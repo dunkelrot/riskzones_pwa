@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Covid-19 Risikogebiete</span>
+    <span class="spacer"></span>
+    <span class="tb-actions">
+      <button mat-icon-button (click)="onHome()"><mat-icon>home</mat-icon></button>
+      <button mat-icon-button [disabled]="notDirty" (click)="onSave()"><mat-icon>save</mat-icon></button>
+      <mat-slide-toggle class="tb-toggle" (change)="onToggleList($event)"></mat-slide-toggle>
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div>
+  <p *ngFor="let code of keyCodes">{{code}}</p>
+</div>
+
+<div>
+  <div class="searchField">
+  <mat-form-field class="zone-name">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" [(ngModel)]="zoneSearchValue" (change)="onChange($event)">
+    <button mat-button *ngIf="zoneSearchValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearSearchFilter()" >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  </div>
+
+  <div class="selection-list">
+    <app-zone-select *ngFor="let zone of filteredZones" [zone]="zone" (zoneSelected)="onZoneSelected($event)"></app-zone-select>
+  </div>
+</div>
