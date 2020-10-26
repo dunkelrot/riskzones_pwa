@@ -1,27 +1,23 @@
-# CoronaRiskZones
+# Risikogebiete Covid-19 / Deutschland - PWA (Progress Web App)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
+## Was macht die App?
 
-## Development server
+Die App lädt die Daten zur 7-Tage-Inzidenz der 412 Landkreisen in Deutschland, die das RKI bereitgestellt.
+Der Nutzer oder die Nutzerin können Landkreise auswählen und sich deren 7-Tage-Inzidenz-Wert in der App anzeigen lassen.
+Alternativ könnte man sich die Werte im Dashboard des RKI bzw. ESRI anschauen. Die App ist lediglich etwas schneller.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Was macht die App sonst?
 
-## Code scaffolding
+Nichts. Den Quellcode kann man auf Github einsehen: https://github.com/dunkelrot/riskzones_pwa
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Werden Daten zu App-Nutzung erhoben?
 
-## Build
+Es werden keine persönlichen Daten von der App gespeichert oder irgendwohin übertragen.
+Die App wird als PWA bereitgestellt. Die App arbeitet mit dem ESRI-Web-API (ein GET-Request), 
+daher ein Hinweis auf [ESRI Datenschutzerklärung](https://www.esri.de/ueber-uns/datenschutz), 
+mehr Informationen gibt es unter dem [ESRI-FAQ](https://www.esri.de/de-de/landingpages/corona-impact-2020/faq)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Warum gibt es die App?
 
-## Running unit tests
+Mir ist die RKI-Dashboard-Webseite zu langsam.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
