@@ -1,27 +1,50 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RKIService} from '../../services/rki-service';
 import {ZoneList, Zone} from '../../model/zones';
 import {Router} from '@angular/router';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {fromEvent, Observable, of, Subscription} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-show-selected-zones',
   templateUrl: './show-selected-zones.component.html',
   styleUrls: ['./show-selected-zones.component.css']
 })
-export class ShowSelectedZonesComponent implements OnInit, OnDestroy {
+export class ShowSelectedZonesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   zoneList: ZoneList = null;
   selectedZoneList: Array<Zone> = null;
 
+  @ViewChild('toolbar', {static: true}) toolbar: ElementRef;
+
+  tbHeight = 64;
+  svHeight = 0;
+
   constructor(private rkiService: RKIService, private router: Router, private snackBar: MatSnackBar) { }
+
+  resizeObservable: Observable<Event>;
+  resizeSubscription: Subscription;
 
   ngOnInit(): void {
     this.rkiService.getZones().subscribe((zoneList) => {
       this.zoneList = zoneList;
       this.selectedZoneList = zoneList.getSelected().sortByPositionIndex().zones;
+      this.adjustScrollViewHeight(window.innerHeight);
     });
+    this.resizeObservable = fromEvent(window, 'resize');
+    this.resizeSubscription = this.resizeObservable.subscribe((event: any) => {
+      this.adjustScrollViewHeight(event.target.innerHeight);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.resizeSubscription.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   onSelectZones(): void {
@@ -41,6 +64,9 @@ export class ShowSelectedZonesComponent implements OnInit, OnDestroy {
     this.snackBar.open('Reihenfolge gespeichert.', '', {duration: 1500});
   }
 
-  ngOnDestroy(): void {
+  adjustScrollViewHeight(windowHeight: number): void {
+    const height = windowHeight - this.tbHeight;
+    this.svHeight = height;
   }
+
 }

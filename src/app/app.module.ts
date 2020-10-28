@@ -28,6 +28,7 @@ import {SafeHtmlPipe} from './pipes/safe-html.pipe';
 import {HelpService} from './services/help-service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatInputModule,
     DragDropModule,
     MatSnackBarModule,
+    ScrollingModule,
   ],
   providers: [
     RKIService,

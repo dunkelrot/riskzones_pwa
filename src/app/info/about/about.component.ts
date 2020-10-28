@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HelpService} from '../../services/help-service';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 declare let marked: any;
 
@@ -13,7 +14,7 @@ export class AboutComponent implements OnInit {
 
   aboutText = '';
 
-  constructor(private helpService: HelpService, private router: Router) { }
+  constructor(private helpService: HelpService, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.helpService.get().subscribe( (result) => {
@@ -22,6 +23,6 @@ export class AboutComponent implements OnInit {
   }
 
   onHome(): void {
-    this.router.navigate(['/']);
+    this.location.back();
   }
 }

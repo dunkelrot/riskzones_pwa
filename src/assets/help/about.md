@@ -1,6 +1,6 @@
 # Über diese Anwendung
 
-_Version 1.0.1_
+_Version 1.0.3_
 
 Anzeige der Covid-19 7-Tage-Inzidenz-Werte für ausgewählte Landkreise. Die angezeigten Daten kommen vom 
 [RKI](https://www.rki.de/DE/Home/homepage_node.html) und können grundsätzlich auch im 
@@ -9,7 +9,7 @@ Anzeige der Covid-19 7-Tage-Inzidenz-Werte für ausgewählte Landkreise. Die ang
 
 ## Kurzanleitung
 
-Über das PLUS-Symbol die Liste aller Landkreise aufrufen, dort die gewünschen Landkreise auswählen und bestätigen.
+Über das PLUS-Symbol die Liste aller Landkreise aufrufen, dort die gewünschten Landkreise auswählen und bestätigen.
 
 Mehr Informationen gibt es auf [Github](https://github.com/dunkelrot/riskzones_pwa).
 
@@ -24,7 +24,7 @@ Datenlizenz Deutschland – Namensnennung – Version 2.0" oder „dl-de/by-2-0"
 
 ## OpenSource
 
-Diese App verwendet die folgenden Open-Source Projekte:
+Diese App nutzt die folgenden Open-Source Projekte:
 
 __[Angular](https://angular.io/)__  
 [Lizenz](https://angular.io/license)

@@ -2,11 +2,12 @@ class ZoneColors {
   static riskZero = '#ffffff';
   static riskLT10 = '#f6f0e1';
   static riskLT20 = '#f6dfb8';
-  static riskLT35 = '#fdcea5';
-  static riskLT50 = '#f18181';
-  static riskLT100 = '#e85151';
-  static riskLT200 = '#c93232';
-  static riskGT200 = '#871212';
+  static riskLT35 = '#eabe98';
+  static riskLT50 = '#e89c92';
+  static riskLT100 = '#e25f5f';
+  static riskLT200 = '#c42424';
+  static riskLT300 = '#871212';
+  static riskGT300 = '#570d0d';
 }
 
 export function roundUp(num, precision): number {
@@ -65,8 +66,10 @@ export class Zone {
       return ZoneColors.riskLT100;
     } else if (this.cases7from100k < 200) {
       return ZoneColors.riskLT200;
+    } else if (this.cases7from100k < 300) {
+      return ZoneColors.riskLT300;
     } else {
-      return ZoneColors.riskGT200;
+      return ZoneColors.riskGT300;
     }
   }
 }

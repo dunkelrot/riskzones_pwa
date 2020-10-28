@@ -1,9 +1,12 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Zone, ZoneFilter, ZoneList, ZoneNameFilter, ZoneSelectedFilter} from '../../model/zones';
 import {RKIService} from '../../services/rki-service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {fromEvent, Observable, of, pipe, Subscription} from 'rxjs';
+import {delay} from 'rxjs/operators';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-select-zones',
@@ -16,6 +19,15 @@ export class SelectZonesComponent implements OnInit, OnDestroy, AfterViewInit {
   zoneSearchValue = '';
   zoneList: ZoneList;
   filteredZones: Array<Zone> = null;
+
+  tbHeight = 0;
+  svHeight = 10;
+
+  resizeObservable: Observable<Event>;
+  resizeSubscription: Subscription;
+
+  @ViewChild('toolbar') toolbar: ElementRef;
+  @ViewChild('scrollView') scrollView: CdkVirtualScrollViewport;
 
   keyCodes = [];
 
@@ -30,19 +42,24 @@ export class SelectZonesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-  }
-
-  onFilter(): void {
-    this.filteredZones = this.zoneList.filter(this.filters).zones;
-  }
-
-  onToggleList(event: MatSlideToggleChange): void {
-    this.selectedFilter.enabled = event.checked === true;
-    this.onFilter();
+    this.rkiService.getZones().subscribe((zoneList) => {
+      this.zoneList = zoneList;
+      this.onFilter();
+      this.adjustScrollViewHeight(window.innerHeight);
+    });
+    this.resizeObservable = fromEvent(window, 'resize');
+    this.resizeSubscription = this.resizeObservable.subscribe((event: any) => {
+      this.adjustScrollViewHeight(event.target.innerHeight);
+    });
   }
 
   ngOnDestroy(): void {
+    this.resizeSubscription.unsubscribe();
     this.zoneList.save();
+  }
+
+  ngAfterViewInit(): void {
+    this.tbHeight = this.toolbar.nativeElement.getBoundingClientRect().height;
   }
 
   onChange(): void {
@@ -58,23 +75,30 @@ export class SelectZonesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onFilter();
   }
 
+  onFilter(): void {
+    this.filteredZones = this.zoneList.filter(this.filters).zones;
+  }
+
+  onToggleList(event: MatSlideToggleChange): void {
+    this.selectedFilter.enabled = event.checked === true;
+    this.onFilter();
+  }
+
   onSave(): void {
     this.location.back();
   }
 
   onHome(): void {
-    this.router.navigate(['/']);
+    this.location.back();
   }
 
   onZoneSelected(): void {
     this.notDirty = false;
   }
 
-  ngAfterViewInit(): void {
-    this.rkiService.getZones().subscribe((zoneList) => {
-      this.zoneList = zoneList;
-      this.onFilter();
-    });
+  adjustScrollViewHeight(windowHeight: number): void {
+    const height = windowHeight - this.tbHeight;
+    this.svHeight = height - 1;
   }
 
 }

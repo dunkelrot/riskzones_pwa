@@ -1,36 +1,44 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Covid-19 Risikogebiete</span>
-    <span class="spacer"></span>
-    <span class="tb-actions">
-      <button mat-icon-button (click)="onHome()"><mat-icon>home</mat-icon></button>
-      <button mat-icon-button [disabled]="notDirty" (click)="onSave()"><mat-icon>save</mat-icon></button>
-      <mat-slide-toggle class="tb-toggle" (change)="onToggleList($event)"></mat-slide-toggle>
-    </span>
-  </mat-toolbar-row>
-</mat-toolbar>
+<div class="main-view">
+  <div #toolbar>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Covid-19 Risikogebiete</span>
+        <span class="spacer"></span>
+        <span class="tb-actions">
+        <button mat-icon-button (click)="onHome()"><mat-icon>home</mat-icon></button>
+        <button mat-icon-button [disabled]="notDirty" (click)="onSave()"><mat-icon>save</mat-icon></button>
+        <mat-slide-toggle class="tb-toggle" (change)="onToggleList($event)"></mat-slide-toggle>
+      </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
-<div>
-  <div class="searchField">
-  <mat-form-field class="zone-name">
-    <mat-label>Name</mat-label>
-    <label>
-      <input matInput type="text" [(ngModel)]="zoneSearchValue" (change)="onChange()">
-    </label>
-    <button mat-button *ngIf="zoneSearchValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearSearchFilter()" >
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  </div>
-
-  <div *ngIf="filteredZones === null">
-    <mat-spinner class="spinner-centered"></mat-spinner>
-  </div>
-
-  <div *ngIf="filteredZones !== null">
-    <div class="selection-list">
-      <app-zone-select *ngFor="let zone of filteredZones" [zone]="zone" (zoneSelected)="onZoneSelected()"></app-zone-select>
+    <div class="search-field">
+      <mat-form-field class="search-value">
+        <mat-label>Name</mat-label>
+        <label>
+          <input matInput type="text" autocomplete="off" [(ngModel)]="zoneSearchValue" (change)="onChange()">
+        </label>
+        <button mat-button *ngIf="zoneSearchValue" matSuffix mat-icon-button aria-label="Clear"
+                (click)="onClearSearchFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button class="search-button" mat-icon-button (click)="onFilter()"><mat-icon>search</mat-icon></button>
     </div>
   </div>
-</div>
 
+  <div>
+    <div *ngIf="filteredZones === null">
+      <mat-spinner class="spinner-centered"></mat-spinner>
+    </div>
+    <div *ngIf="filteredZones !== null">
+      <div class="selection-list">
+        <cdk-virtual-scroll-viewport itemSize="40" [style.height.px]="svHeight" class="zones-list-viewport" #scrollView>
+          <app-zone-select *cdkVirtualFor="let zone of filteredZones" [zone]="zone"
+                           (zoneSelected)="onZoneSelected()"></app-zone-select>
+        </cdk-virtual-scroll-viewport>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,22 +1,28 @@
-<mat-toolbar color="primary">
-  <span>Covid-19 Risikogebiete</span>
-  <span class="spacer"></span>
-  <span class="tb-actions">
-    <button mat-button (click)="onAbout()"><mat-icon>info</mat-icon></button>
-  </span>
-</mat-toolbar>
+<div class="main-view">
+  <div #toolbar class="main-toolbar">
+    <mat-toolbar  color="primary">
+      <span>Covid-19 Risikogebiete</span>
+      <span class="spacer"></span>
+      <span class="tb-actions">
+        <button mat-button (click)="onAbout()"><mat-icon>info</mat-icon></button>
+      </span>
+    </mat-toolbar>
+  </div>
+  <div>
+    <div *ngIf="zoneList === null">
+      <mat-spinner class="spinner-centered"></mat-spinner>
+    </div>
 
-<div *ngIf="zoneList === null">
-  <mat-spinner class="spinner-centered"></mat-spinner>
+    <div *ngIf="zoneList !== null">
+      <div cdkDropList (cdkDropListDropped)="drop($event)" class="zone-list"  [style.height.px]="svHeight">
+        <app-zone-details *ngFor="let zone of selectedZoneList" [zone]="zone"></app-zone-details>
+      </div>
+      <div class="select-zones">
+        <button class="zone-add-button" mat-fab color="accent" aria-label="add zone" (click)="onSelectZones()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div *ngIf="zoneList !== null">
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
-    <app-zone-details *ngFor="let zone of selectedZoneList" [zone]="zone"></app-zone-details>
-  </div>
-  <div class="select-zones">
-    <button class="zone-add-button" mat-fab color="accent" aria-label="add zone" (click)="onSelectZones()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-</div>

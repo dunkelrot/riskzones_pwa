@@ -8,3 +8,17 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.main-view {
+  overflow: hidden;
+}
+
+.main-toolbar {
+  position: fixed;
+  width:100%;
+}
+
+.zone-list {
+  margin-top: 64px;
+  overflow: auto;
+}
