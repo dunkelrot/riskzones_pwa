@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, Subject, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {ZoneList, ZoneListFactory} from '../model/zones';
 import {catchError, map, retry} from 'rxjs/operators';
+import {ZonesHistory} from '../model/history';
 
 
 @Injectable()
 export class RKIService {
 
-  private subject = new Subject();
+  private history = new ZonesHistory();
   private zoneList: ZoneList = null;
   private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?outFields=*&returnGeometry=false&resultOffset=0&f=json&where=1=1';
   private headers: HttpHeaders = new HttpHeaders();
@@ -25,8 +26,19 @@ export class RKIService {
     return this.http.get(this.api).pipe(
       retry(3),
       map((rawData: any) => {
-        this.zoneList = ZoneListFactory.buildZoneList(rawData);
-        this.zoneList.load();
+        try {
+          this.zoneList = ZoneListFactory.buildZoneList(rawData);
+          this.zoneList.loadSelected();
+
+          this.history.load();
+          this.zoneList.zones.forEach(zone => {
+            this.history.addEntry(zone.id, zone.updateDate, zone.cases7from100k);
+          });
+          this.history.save();
+
+        } catch (ex) {
+          this.zoneList = new ZoneList();
+        }
         return this.zoneList;
       }),
       catchError(this.errorHandler)
@@ -39,5 +51,9 @@ export class RKIService {
     } else {
       return of(this.zoneList);
     }
+  }
+
+  getHistory(): ZonesHistory {
+    return this.history;
   }
 }

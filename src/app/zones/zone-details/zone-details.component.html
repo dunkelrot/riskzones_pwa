@@ -5,7 +5,13 @@
     <div>
       <div class="region">{{zone.region}} / {{zone.description}}</div>
       <div class="zone">{{zone.name}}</div>
-      <div class="cases-big">{{zone.cases7from100k}}</div>
+      <div class="cases">
+        <div class="cases-number">{{zone.cases7from100k}}</div>
+        <div class="cases-trend" [style.color]="trendColor">
+          <div *ngIf="diffInPercent < 0"><mat-icon>trending_down</mat-icon></div>
+          <div *ngIf="diffInPercent > 0"><mat-icon>trending_up</mat-icon></div>
+        </div>
+      </div>
       <div class="time-small">{{zone.updateDate}}</div>
     </div>
     <div class="spacer">

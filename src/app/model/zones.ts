@@ -1,3 +1,5 @@
+import {stripDate} from './history';
+
 class ZoneColors {
   static riskZero = '#ffffff';
   static riskLT10 = '#f6f0e1';
@@ -146,7 +148,7 @@ export class ZoneList {
     return result;
   }
 
-  save(): void {
+  saveSelected(): void {
     const selected = [];
     this.zones.forEach((zone) => {
       if (zone.selected) {
@@ -156,7 +158,7 @@ export class ZoneList {
     localStorage.setItem('session', JSON.stringify(selected));
   }
 
-  load(): void {
+  loadSelected(): void {
     const session = localStorage.getItem('session');
     if (session !== undefined) {
       try {
@@ -169,7 +171,8 @@ export class ZoneList {
           }
         });
       } catch (ex) {
-        // ignored
+        localStorage.removeItem('session');
+        throw Error('Liste der Land/Stadtkreis fehlerhaft.');
       }
     }
   }
@@ -193,7 +196,7 @@ export class ZoneFactory {
     zone.name = json.GEN;
     zone.nameLC = zone.name.toLocaleLowerCase();
     zone.description = json.BEZ;
-    zone.updateDate = json.last_update;
+    zone.updateDate = stripDate(json.last_update);
     zone.region = json.BL;
     zone.cases7from100k = roundUp(json.cases7_per_100k, 1);
     zone.selected = false;

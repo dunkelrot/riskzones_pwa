@@ -7,10 +7,19 @@
   box-shadow: 0 2px 2px gainsboro;
 }
 
-.cases-big {
+.cases-number {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   font-size: 2em;
+}
+
+.cases-trend {
+  margin-left: 1em;
+}
+
+.cases {
+  display: flex;
+  flex-direction: row;
 }
 
 .time-small {

@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Zone, ZoneFilter, ZoneList, ZoneNameFilter, ZoneSelectedFilter} from '../../model/zones';
 import {RKIService} from '../../services/rki-service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {fromEvent, Observable, of, pipe, Subscription} from 'rxjs';
-import {delay} from 'rxjs/operators';
+import {fromEvent, Observable, Subscription} from 'rxjs';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component({
@@ -13,23 +12,21 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
   templateUrl: './select-zones.component.html',
   styleUrls: ['./select-zones.component.css']
 })
-export class SelectZonesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SelectZonesComponent implements OnInit, OnDestroy {
 
   notDirty = true;
   zoneSearchValue = '';
   zoneList: ZoneList;
   filteredZones: Array<Zone> = null;
 
-  tbHeight = 0;
+  tbHeight = 138;
   svHeight = 10;
 
   resizeObservable: Observable<Event>;
   resizeSubscription: Subscription;
 
-  @ViewChild('toolbar') toolbar: ElementRef;
+  @ViewChild('toolbar') toolbar: ElementRef = null;
   @ViewChild('scrollView') scrollView: CdkVirtualScrollViewport;
-
-  keyCodes = [];
 
   selectedFilter: ZoneSelectedFilter = new ZoneSelectedFilter(true);
   nameFilter: ZoneNameFilter = new ZoneNameFilter('');
@@ -55,11 +52,7 @@ export class SelectZonesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.resizeSubscription.unsubscribe();
-    this.zoneList.save();
-  }
-
-  ngAfterViewInit(): void {
-    this.tbHeight = this.toolbar.nativeElement.getBoundingClientRect().height;
+    this.zoneList.saveSelected();
   }
 
   onChange(): void {

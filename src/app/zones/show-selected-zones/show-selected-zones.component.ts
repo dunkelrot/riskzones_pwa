@@ -1,18 +1,17 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RKIService} from '../../services/rki-service';
-import {ZoneList, Zone} from '../../model/zones';
+import {Zone, ZoneList} from '../../model/zones';
 import {Router} from '@angular/router';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {fromEvent, Observable, of, Subscription} from 'rxjs';
-import {delay} from 'rxjs/operators';
+import {fromEvent, Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-show-selected-zones',
   templateUrl: './show-selected-zones.component.html',
   styleUrls: ['./show-selected-zones.component.css']
 })
-export class ShowSelectedZonesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ShowSelectedZonesComponent implements OnInit, OnDestroy {
 
   zoneList: ZoneList = null;
   selectedZoneList: Array<Zone> = null;
@@ -43,10 +42,6 @@ export class ShowSelectedZonesComponent implements OnInit, OnDestroy, AfterViewI
     this.resizeSubscription.unsubscribe();
   }
 
-  ngAfterViewInit(): void {
-
-  }
-
   onSelectZones(): void {
     this.router.navigate(['/select']);
   }
@@ -60,13 +55,12 @@ export class ShowSelectedZonesComponent implements OnInit, OnDestroy, AfterViewI
     this.selectedZoneList.forEach((zone, index) => {
       zone.positionIndex = index;
     });
-    this.zoneList.save();
+    this.zoneList.saveSelected();
     this.snackBar.open('Reihenfolge gespeichert.', '', {duration: 1500});
   }
 
   adjustScrollViewHeight(windowHeight: number): void {
-    const height = windowHeight - this.tbHeight;
-    this.svHeight = height;
+    this.svHeight = windowHeight - this.tbHeight;
   }
 
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map, retry} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -8,10 +8,8 @@ import {environment} from '../../environments/environment';
 export class HelpService {
 
   private api = environment.server;
-  private headers: HttpHeaders = new HttpHeaders();
 
   constructor(private http: HttpClient) {
-    // this.headers.append('Content-Type', 'application/json');
   }
 
   private errorHandler(error: Error | any): Observable<never> {
