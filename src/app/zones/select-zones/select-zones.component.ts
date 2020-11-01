@@ -52,7 +52,6 @@ export class SelectZonesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeSubscription.unsubscribe();
-    this.zoneList.saveSelected();
   }
 
   onChange(): void {
@@ -78,6 +77,7 @@ export class SelectZonesComponent implements OnInit, OnDestroy {
   }
 
   onSave(): void {
+    this.zoneList.saveSelectedIfValid();
     this.location.back();
   }
 

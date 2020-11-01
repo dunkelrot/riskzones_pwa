@@ -4,15 +4,8 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.cases_gt_10 {
-  background-color: antiquewhite;
-}
-
-.cases_gt_20 {
-  background-color: #fadfd7;
-}
-
-.spinner-centered {
+.crz-spinner-centered {
   margin: 0 auto;
   margin-top: 10em;
 }
+

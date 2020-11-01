@@ -1,4 +1,4 @@
-.zone-card {
+.crz-zone-card {
   margin: 0.4em;
   color: dimgrey;
   background-color: white;
@@ -7,48 +7,48 @@
   box-shadow: 0 2px 2px gainsboro;
 }
 
-.cases-number {
+.crz-cases-number {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   font-size: 2em;
 }
 
-.cases-trend {
+.crz-cases-trend {
   margin-left: 1em;
 }
 
-.cases {
+.crz-cases {
   display: flex;
   flex-direction: row;
 }
 
-.time-small {
+.crz-time-small {
   font-size: 0.6em;
 }
 
-.region {
+.crz-region {
   font-size: 0.8em;
 }
 
-.zone {
+.crz-zone {
   font-size: 1.2em;
 }
 
-.color-box {
+.crz-color-box {
   min-width: 2em;
   margin-right: 0.4em;
 }
 
-.zone-details {
+.crz-zone-details {
   display: flex;
   flex-direction: row;
 }
 
-.spacer {
+.crz-spacer {
   flex: 1 1 auto;
 }
 
-.drag-handle {
+.crz-drag-handle {
   margin-right: 1em;
 }
 

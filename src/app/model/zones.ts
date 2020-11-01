@@ -77,8 +77,9 @@ export class Zone {
 }
 
 export class ZoneList {
+
   zones: Zone[] = [];
-  constructor() {
+  constructor(public valid = true) {
   }
 
   public add(zone: Zone): void {
@@ -148,14 +149,16 @@ export class ZoneList {
     return result;
   }
 
-  saveSelected(): void {
-    const selected = [];
-    this.zones.forEach((zone) => {
-      if (zone.selected) {
-        selected.push({id: zone.id, selected: true, position: zone.positionIndex});
-      }
-    });
-    localStorage.setItem('session', JSON.stringify(selected));
+  saveSelectedIfValid(): void {
+    if (this.valid) {
+      const selected = [];
+      this.zones.forEach((zone) => {
+        if (zone.selected) {
+          selected.push({id: zone.id, selected: true, position: zone.positionIndex});
+        }
+      });
+      localStorage.setItem('session', JSON.stringify(selected));
+    }
   }
 
   loadSelected(): void {
@@ -181,10 +184,12 @@ export class ZoneList {
 export class ZoneListFactory {
   static buildZoneList(json: any): ZoneList {
     const zoneList = new ZoneList();
-    json.features.forEach( (zone) => {
-      zoneList.zones.push(ZoneFactory.buildZone(zone.attributes));
-    });
-    zoneList.sortByName();
+    if (json.features !== undefined) {
+      json.features.forEach((zone) => {
+        zoneList.zones.push(ZoneFactory.buildZone(zone.attributes));
+      });
+      zoneList.sortByName();
+    }
     return zoneList;
   }
 }

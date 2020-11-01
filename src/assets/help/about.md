@@ -1,7 +1,5 @@
 # Über diese Anwendung
 
-_Version 1.1.0_
-
 Anzeige der Covid-19 7-Tage-Inzidenz-Werte für ausgewählte Landkreise. Die angezeigten Daten kommen vom 
 [RKI](https://www.rki.de/DE/Home/homepage_node.html) und können grundsätzlich auch im 
 [RKI Dashboard](https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4)

@@ -39,7 +39,7 @@ export class ZoneHistoryRecord {
     }
   }
 
-  getDiffInPercentToYesterday(): number{
+  getDiffInPercentToYesterday(): number {
     let result = 0;
     if (this.records.length >= 2) {
       const today = this.records[this.records.length - 1];

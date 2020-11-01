@@ -1,26 +1,26 @@
-<div class="zone-card" cdkDrag>
-  <div class="zone-details">
-    <div class="color-box" [style.backgroundColor]="zone.color">
+<div class="crz-zone-card" cdkDrag>
+  <div class="crz-zone-details">
+    <div class="crz-color-box" [style.backgroundColor]="zone.color">
     </div>
     <div>
-      <div class="region">{{zone.region}} / {{zone.description}}</div>
-      <div class="zone">{{zone.name}}</div>
-      <div class="cases">
-        <div class="cases-number">{{zone.cases7from100k}}</div>
-        <div class="cases-trend" [style.color]="trendColor">
+      <div class="crz-region">{{zone.region}} / {{zone.description}}</div>
+      <div class="crz-zone">{{zone.name}}</div>
+      <div class="crz-cases">
+        <div class="crz-cases-number">{{zone.cases7from100k}}</div>
+        <div class="crz-cases-trend" [style.color]="trendColor" [style.font-weight]="trendFontWeight">
           <div *ngIf="diffInPercent < 0"><mat-icon>trending_down</mat-icon></div>
           <div *ngIf="diffInPercent > 0"><mat-icon>trending_up</mat-icon></div>
         </div>
       </div>
-      <div class="time-small">{{zone.updateDate}}</div>
+      <div class="crz-time-small">{{zone.updateDate}}</div>
     </div>
-    <div class="spacer">
+    <div class="crz-spacer">
     </div>
     <div>
-      <div class="drag-handle" cdkDragHandle>
+      <div class="crz-drag-handle" cdkDragHandle>
         <mat-icon>drag_handle</mat-icon>
       </div>
     </div>
   </div>
-
 </div>
+

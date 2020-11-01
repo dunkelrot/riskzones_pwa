@@ -1,0 +1,6 @@
+<div class="mat-typography alert-toast">
+  <div class="alert-type" [ngClass]="{ 'app-alert-success': data.type === SUCCESS, 'app-alert-error': data.type === ERROR }"></div>
+  <div>
+    {{data.text}}
+  </div>
+</div>

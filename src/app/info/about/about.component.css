@@ -1,9 +1,15 @@
-.preview {
+.crz-preview {
   margin: 2em;
 }
 
-.spacer {
+.crz-spacer {
   flex: 1 1 auto;
+}
+
+.crz-version {
+  margin: 2em;
+  border-top: 1px solid gainsboro;
+  font-size: 1em;
 }
 
 a {

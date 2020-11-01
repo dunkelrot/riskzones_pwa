@@ -1,11 +1,19 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Covid-19 Risikogebiete</span>
-    <span class="spacer"></span>
+    <span class="crz-spacer"></span>
     <span class="tb-actions">
       <button mat-button (click)="onHome()"><mat-icon>home</mat-icon></button>
     </span>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="preview" [innerHtml]="aboutText | safeHtml"></div>
+<div class="crz-preview" [innerHtml]="aboutText | safeHtml"></div>
+
+<div class="crz-version">
+  <span>Version: {{version}} &#169; 2020
+    – <a href="https://www.risikogebiete.net/_pages/docs/dataprotection.html">Datenschutz</a>
+    – <a href="https://github.com/dunkelrot/riskzones_pwa/blob/master/LICENSE">Lizenz</a>
+    – <a href="https://github.com/dunkelrot/riskzones_pwa">Github</a>
+  </span>
+</div>

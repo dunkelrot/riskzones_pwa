@@ -29,6 +29,8 @@ import {HelpService} from './services/help-service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { AlertToastComponent } from './alert/alert-toast/alert-toast.component';
+import {AlertService} from './services/alert-service';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     ZoneSelectComponent,
     AboutComponent,
     SafeHtmlPipe,
+    AlertToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
   providers: [
     RKIService,
     HelpService,
+    AlertService,
   ],
   bootstrap: [AppComponent]
 })
