@@ -37,6 +37,11 @@
 }
 
 .crz-error-msg {
+  font-size: 0.8em;
+  margin-top: 0.4em;
+}
+
+.crz-error-subtext {
   font-size: 0.4em;
   margin-top: 0.4em;
 

@@ -4,7 +4,6 @@ import {Observable, of, throwError} from 'rxjs';
 import {ZoneList, ZoneListFactory} from '../model/zones';
 import {catchError, map, retry} from 'rxjs/operators';
 import {ZonesHistory} from '../model/history';
-import {AlertService} from './alert-service';
 
 
 @Injectable()

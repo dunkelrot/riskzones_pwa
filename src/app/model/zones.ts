@@ -163,7 +163,7 @@ export class ZoneList {
 
   loadSelected(): void {
     const session = localStorage.getItem('session');
-    if (session !== undefined) {
+    if (session !== null) {
       try {
         const selected = JSON.parse(session);
         selected.forEach((entry) => {
@@ -175,7 +175,7 @@ export class ZoneList {
         });
       } catch (ex) {
         localStorage.removeItem('session');
-        throw Error('Liste der Land/Stadtkreis fehlerhaft.');
+        throw Error('Liste der ausgewählten Land/Stadtkreise fehlerhaft.');
       }
     }
   }

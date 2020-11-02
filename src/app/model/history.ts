@@ -105,7 +105,7 @@ export class ZonesHistory {
   load(): void {
     this.zones.clear();
     const historyLS = localStorage.getItem('history');
-    if (historyLS !== undefined) {
+    if (historyLS !== null) {
       try {
         const history = JSON.parse(historyLS);
         history.forEach((zone: any) => {
