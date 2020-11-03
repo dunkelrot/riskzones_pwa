@@ -1,0 +1,36 @@
+.crz-zone-info {
+  margin: 0.4em;
+  color: dimgrey;
+  background-color: white;
+  border: 1px solid gainsboro;
+  padding: 0.4em;
+  box-shadow: 0 2px 2px gainsboro;
+  font-size: 1.2em;
+}
+
+.crz-spacer {
+  flex: 1 1 auto;
+}
+
+.crz-zone-info-title {
+  font-size: 1.6em;
+  line-height: 1.2em;
+}
+
+.crz-zone-info-description {
+  font-size: 1em;
+  margin-bottom: 0.4em;
+}
+
+.crz-zone-info-region {
+  font-size: 1em;
+  margin-bottom: 0.4em;
+}
+
+.crz-zone-info-population {
+  font-size: 0.8em;
+}
+
+hr {
+  border: 1px solid gainsboro;
+}

@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Covid-19 Risikogebiete</span>
+    <span class="crz-spacer"></span>
+    <span class="tb-actions">
+      <button mat-button (click)="onHome()"><mat-icon>home</mat-icon></button>
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div *ngIf="zone === null">
+  <mat-spinner class="crz-spinner-centered"></mat-spinner>
+</div>
+
+<div *ngIf="zone !== null">
+  <div class="crz-zone-info">
+    <div class="crz-zone-info-title">
+      {{zone.name}}
+    </div>
+    <div class="crz-zone-info-description">
+      {{zone.description}} – {{zone.region}}
+    </div>
+    <hr>
+    <div class="crz-fields">
+      <table>
+        <tr>
+          <td>Fälle 7-Tage auf 100T EW </td>
+          <td>{{cases7Per100k}}</td>
+        </tr>
+        <tr>
+          <td>Fälle 7-Tage auf 100T EW im BL</td>
+          <td>{{cases7Per100kBL}}</td>
+        </tr>
+        <tr>
+          <td>Fälle auf 100T EW</td>
+          <td>{{casesPer100k}}</td>
+        </tr>
+        <tr>
+          <td>Tote</td>
+          <td>{{zone.deaths}}</td>
+        </tr>
+      </table>
+      <hr>
+      <div class="crz-zone-info-population">
+        Einwohner (EW): {{population}} – im Bundesland (BL): {{populationBL}}
+      </div>
+    </div>
+  </div>
+</div>
