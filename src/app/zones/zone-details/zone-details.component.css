@@ -17,10 +17,6 @@
   margin-left: 1em;
 }
 
-.crz-cases-trend-icon {
-  letter-spacing: -6px;
-}
-
 .crz-cases {
   display: flex;
   flex-direction: row;

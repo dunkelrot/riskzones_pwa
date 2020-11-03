@@ -8,8 +8,8 @@
       <div class="crz-cases">
         <div class="crz-cases-number">{{cases7Per100k}}</div>
         <div class="crz-cases-trend" [style.color]="trendColor">
-          <div *ngIf="diffInPercent < 0"><mat-icon class="crz-cases-trend-icon">{{trendingDown}}</mat-icon></div>
-          <div *ngIf="diffInPercent > 0"><mat-icon class="crz-cases-trend-icon">{{trendingUp}}</mat-icon></div>
+          <div *ngIf="diffInPercent < 0"><mat-icon>{{trendingDown}}</mat-icon></div>
+          <div *ngIf="diffInPercent > 0"><mat-icon>{{trendingUp}}</mat-icon></div>
         </div>
       </div>
       <div class="crz-time-small">{{zone.updateDate}}</div>
