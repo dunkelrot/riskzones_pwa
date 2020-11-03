@@ -45,30 +45,38 @@ export class ZoneSelectedFilter implements ZoneFilter {
 }
 
 export class Zone {
-  id = '';
+  id = 0;
   name = '';
   nameLC = '';
   description = '';
   updateDate = '';
-  cases7from100k = 0.0;
+  populationBL = 0.0;
+  population = 0.0;
+
+  cases7Per100k = 0.0;
+  casesPer100k = 0.0;
+  cases7BlPer100k = 0.0;
+  cases = 0.0;
+  deaths = 0.0;
+
   region = '';
   selected = false;
   positionIndex = 0;
 
   get color(): string {
-    if (this.cases7from100k < 10) {
+    if (this.cases7Per100k < 10) {
       return ZoneColors.riskLT10;
-    } else if (this.cases7from100k < 20) {
+    } else if (this.cases7Per100k < 20) {
       return ZoneColors.riskLT20;
-    } else if (this.cases7from100k < 35) {
+    } else if (this.cases7Per100k < 35) {
       return ZoneColors.riskLT35;
-    } else if (this.cases7from100k < 50) {
+    } else if (this.cases7Per100k < 50) {
       return ZoneColors.riskLT50;
-    } else if (this.cases7from100k < 100) {
+    } else if (this.cases7Per100k < 100) {
       return ZoneColors.riskLT100;
-    } else if (this.cases7from100k < 200) {
+    } else if (this.cases7Per100k < 200) {
       return ZoneColors.riskLT200;
-    } else if (this.cases7from100k < 300) {
+    } else if (this.cases7Per100k < 300) {
       return ZoneColors.riskLT300;
     } else {
       return ZoneColors.riskGT300;
@@ -105,7 +113,7 @@ export class ZoneList {
     return this;
   }
 
-  public getByID(id: string): Zone {
+  public getByID(id: number): Zone {
     let result = null;
     this.zones.forEach((zone) => {
       if (zone.id === id) {
@@ -115,7 +123,7 @@ export class ZoneList {
     return result;
   }
 
-  public setSelectedByID(id: string): void {
+  public setSelectedByID(id: number): void {
     this.zones.forEach((zone) => {
       if (zone.id === id) {
         zone.selected = true;
@@ -196,6 +204,8 @@ export class ZoneListFactory {
 
 export class ZoneFactory {
   static buildZone(json: any): Zone {
+    const format = Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true });
+
     const zone = new Zone();
     zone.id = json.OBJECTID;
     zone.name = json.GEN;
@@ -203,7 +213,15 @@ export class ZoneFactory {
     zone.description = json.BEZ;
     zone.updateDate = stripDate(json.last_update);
     zone.region = json.BL;
-    zone.cases7from100k = roundUp(json.cases7_per_100k, 1);
+
+    zone.population = json.EWZ;
+    zone.populationBL = json.EWZ_BL;
+    zone.cases = json.cases;
+    zone.cases7Per100k = roundUp(json.cases7_per_100k, 1);
+    zone.casesPer100k = roundUp(json.cases_per_100k, 1);
+    zone.cases7BlPer100k = roundUp(json.cases7_bl_per_100k, 1);
+    zone.deaths = json.deaths;
+
     zone.selected = false;
     return zone;
   }

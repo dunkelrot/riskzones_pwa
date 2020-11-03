@@ -6,15 +6,20 @@
       <div class="crz-region">{{zone.region}} / {{zone.description}}</div>
       <div class="crz-zone">{{zone.name}}</div>
       <div class="crz-cases">
-        <div class="crz-cases-number">{{zone.cases7from100k}}</div>
-        <div class="crz-cases-trend" [style.color]="trendColor" [style.font-weight]="trendFontWeight">
-          <div *ngIf="diffInPercent < 0"><mat-icon>trending_down</mat-icon></div>
-          <div *ngIf="diffInPercent > 0"><mat-icon>trending_up</mat-icon></div>
+        <div class="crz-cases-number">{{cases7Per100k}}</div>
+        <div class="crz-cases-trend" [style.color]="trendColor">
+          <div *ngIf="diffInPercent < 0"><mat-icon class="crz-cases-trend-icon">{{trendingDown}}</mat-icon></div>
+          <div *ngIf="diffInPercent > 0"><mat-icon class="crz-cases-trend-icon">{{trendingUp}}</mat-icon></div>
         </div>
       </div>
       <div class="crz-time-small">{{zone.updateDate}}</div>
     </div>
     <div class="crz-spacer">
+    </div>
+    <div >
+      <button (click)="onShowInfo()"class="crz-info" mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
     </div>
     <div>
       <div class="crz-drag-handle" cdkDragHandle>

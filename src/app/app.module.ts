@@ -31,6 +31,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { AlertToastComponent } from './alert/alert-toast/alert-toast.component';
 import {AlertService} from './services/alert-service';
+import { ZoneInfoComponent } from './zones/zone-info/zone-info.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {AlertService} from './services/alert-service';
     AboutComponent,
     SafeHtmlPipe,
     AlertToastComponent,
+    ZoneInfoComponent,
   ],
   imports: [
     BrowserModule,

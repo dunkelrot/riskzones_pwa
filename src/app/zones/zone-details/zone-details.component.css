@@ -17,9 +17,14 @@
   margin-left: 1em;
 }
 
+.crz-cases-trend-icon {
+  letter-spacing: -6px;
+}
+
 .crz-cases {
   display: flex;
   flex-direction: row;
+  align-content: center;
 }
 
 .crz-time-small {
@@ -49,6 +54,12 @@
 }
 
 .crz-drag-handle {
+  height: 40px;
   margin-right: 1em;
 }
 
+.crz-info {
+  line-height: 0px;
+  height: 0px;
+  margin-right: 1em;
+}

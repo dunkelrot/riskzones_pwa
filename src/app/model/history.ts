@@ -14,11 +14,10 @@ export class HistoryRecord {
   }
 }
 
-
 export class ZoneHistoryRecord {
   records: Array<HistoryRecord>;
 
-  constructor(public id: string) {
+  constructor(public id: number) {
     this.records = new Array<HistoryRecord>();
   }
 
@@ -49,28 +48,28 @@ export class ZoneHistoryRecord {
         const yesterday = this.records[this.records.length - 2];
         // is the previous record from yesterday?
         if (today.dateTime.diff(yesterday.dateTime, ['days']).days === 1) {
-          result = yesterday.cases7from100k / today.cases7from100k - 1;
+          result = today.cases7from100k / yesterday.cases7from100k - 1;
         }
       }
     }
-    return result;
+    return result * 100;
   }
 }
 
 
 export class ZonesHistory {
 
-  zones: Map<string, ZoneHistoryRecord>;
+  zones: Map<number, ZoneHistoryRecord>;
 
   constructor() {
-    this.zones = new Map<string, ZoneHistoryRecord>();
+    this.zones = new Map<number, ZoneHistoryRecord>();
   }
 
-  getEntryById(id: string): ZoneHistoryRecord {
+  getEntryById(id: number): ZoneHistoryRecord {
     return this.zones.get(id);
   }
 
-  addEntry(id: string, date: string, cases7from100k: number): void {
+  addEntry(id: number, date: string, cases7from100k: number): void {
     let historyEntry = this.getEntryById(id);
     if (historyEntry !== undefined) {
       historyEntry.updateOrPushCasesForDate(date, cases7from100k);
@@ -81,7 +80,7 @@ export class ZonesHistory {
     }
   }
 
-  getDiffInPercentToYesterday(id: string): number {
+  getDiffInPercentToYesterday(id: number): number {
     let result = 0;
     const historyEntry = this.getEntryById(id);
     if (historyEntry !== undefined) {

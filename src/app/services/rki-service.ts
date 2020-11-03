@@ -11,7 +11,11 @@ export class RKIService {
 
   private history = new ZonesHistory();
   private zoneList: ZoneList = null;
-  private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,BEZ,GEN,last_update,cases7_per_100k,BL&returnGeometry=false&outSR=4326&f=json';
+
+  // tslint:disable-next-line:max-line-length
+  // private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,BEZ,GEN,last_update,cases7_per_100k,BL&returnGeometry=false&outSR=4326&f=json';
+  private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,EWZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county,last_update,cases7_per_100k,recovered,EWZ_BL,cases7_bl_per_100k&returnGeometry=false&outSR=4326&f=json';
+
   private headers: HttpHeaders = new HttpHeaders();
 
   constructor(private http: HttpClient) {
@@ -22,7 +26,7 @@ export class RKIService {
     return throwError(error);
   }
 
-  getLoadZones(): Observable<ZoneList> {
+  private loadZones(): Observable<ZoneList> {
     return this.http.get(this.api).pipe(
       retry(3),
       map((rawData: any) => {
@@ -31,7 +35,7 @@ export class RKIService {
 
         this.history.load();
         this.zoneList.zones.forEach(zone => {
-          this.history.addEntry(zone.id, zone.updateDate, zone.cases7from100k);
+          this.history.addEntry(zone.id, zone.updateDate, zone.cases7Per100k);
         });
         this.history.save();
 
@@ -43,7 +47,7 @@ export class RKIService {
 
   getZones(): Observable<ZoneList> {
     if (this.zoneList == null) {
-      return this.getLoadZones();
+      return this.loadZones();
     } else {
       return of(this.zoneList);
     }
