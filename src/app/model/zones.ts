@@ -3,13 +3,13 @@ import {stripDate} from './history';
 class ZoneColors {
   static riskZero = '#ffffff';
   static riskLT10 = '#f6f0e1';
-  static riskLT20 = '#f6dfb8';
-  static riskLT35 = '#eabe98';
-  static riskLT50 = '#e89c92';
-  static riskLT100 = '#e25f5f';
-  static riskLT200 = '#c42424';
-  static riskLT300 = '#871212';
-  static riskGT300 = '#570d0d';
+  static riskLT20 = '#f2b84a';
+  static riskLT35 = '#de8735';
+  static riskLT50 = '#c14119';
+  static riskLT100 = '#a90600';
+  static riskLT200 = '#830300';
+  static riskLT300 = '#6a0200';
+  static riskGT300 = '#4b0100';
 }
 
 export function roundUp(num, precision): number {
@@ -64,19 +64,23 @@ export class Zone {
   positionIndex = 0;
 
   get color(): string {
-    if (this.cases7Per100k < 10) {
+    return Zone.zoneColor(this.cases7Per100k);
+  }
+
+  static zoneColor(cases: number): string {
+    if (cases < 10) {
       return ZoneColors.riskLT10;
-    } else if (this.cases7Per100k < 20) {
+    } else if (cases < 20) {
       return ZoneColors.riskLT20;
-    } else if (this.cases7Per100k < 35) {
+    } else if (cases < 35) {
       return ZoneColors.riskLT35;
-    } else if (this.cases7Per100k < 50) {
+    } else if (cases < 50) {
       return ZoneColors.riskLT50;
-    } else if (this.cases7Per100k < 100) {
+    } else if (cases < 100) {
       return ZoneColors.riskLT100;
-    } else if (this.cases7Per100k < 200) {
+    } else if (cases < 200) {
       return ZoneColors.riskLT200;
-    } else if (this.cases7Per100k < 300) {
+    } else if (cases < 300) {
       return ZoneColors.riskLT300;
     } else {
       return ZoneColors.riskGT300;
@@ -204,8 +208,6 @@ export class ZoneListFactory {
 
 export class ZoneFactory {
   static buildZone(json: any): Zone {
-    const format = Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true });
-
     const zone = new Zone();
     zone.id = json.OBJECTID;
     zone.name = json.GEN;

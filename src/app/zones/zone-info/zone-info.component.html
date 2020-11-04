@@ -20,6 +20,9 @@
     <div class="crz-zone-info-description">
       {{zone.description}} – {{zone.region}}
     </div>
+    <div class="crz-zone-info-date" [ngClass]="{ 'crz-date-not-today': !isDataFromToday }">
+      {{zone.updateDate}}
+    </div>
     <hr>
     <div class="crz-fields">
       <table>
@@ -46,4 +49,8 @@
       </div>
     </div>
   </div>
+
+  <app-zone-history [zone]="zone"></app-zone-history>
+
 </div>
+

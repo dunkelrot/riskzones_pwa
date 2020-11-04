@@ -12,6 +12,16 @@
   flex: 1 1 auto;
 }
 
+.crz-zone-info-date {
+  font-size: 1em;
+  margin-bottom: 0.4em;
+  padding: 0.2em;
+}
+
+.crz-date-not-today {
+  background-color: #ff5a68;
+}
+
 .crz-zone-info-title {
   font-size: 1.6em;
   line-height: 1.2em;
@@ -28,7 +38,7 @@
 }
 
 .crz-zone-info-population {
-  font-size: 0.8em;
+  font-size: 0.6em;
 }
 
 hr {

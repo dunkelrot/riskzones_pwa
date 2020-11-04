@@ -1,6 +1,6 @@
 import {DateTime} from 'luxon';
 
-const MAX_DATES_COUNT = 2;
+const MAX_DATES_COUNT = 7;
 
 export function stripDate(date: string): string {
   return date.substring(0, date.length - date.indexOf('00:00 Uhr') + 1);
@@ -10,6 +10,7 @@ export function toDateTime(date: string): DateTime {
   return DateTime.fromFormat(date, 'dd.LL.yyyy').minus({days: 0});
 }
 export class HistoryRecord {
+  public casesPer100k: number;
   constructor(public dateTime: DateTime, public cases7from100k: number) {
   }
 }
@@ -21,12 +22,13 @@ export class ZoneHistoryRecord {
     this.records = new Array<HistoryRecord>();
   }
 
-  updateOrPushCasesForDate(date: string, cases7from100k: number): void {
+  updateOrPushCasesForDate(date: string, cases7from100k: number, casesPer100k: number): void {
     const dateTime = toDateTime(date);
     let found = false;
     this.records.forEach((record) => {
       if (record.dateTime.toMillis() === dateTime.toMillis()) {
         record.cases7from100k = cases7from100k;
+        record.casesPer100k = casesPer100k;
         found = true;
       }
     });
@@ -34,7 +36,9 @@ export class ZoneHistoryRecord {
       if (this.records.length >= MAX_DATES_COUNT) {
         this.records.shift();
       }
-      this.records.push(new HistoryRecord(dateTime, cases7from100k));
+      const record = new HistoryRecord(dateTime, cases7from100k);
+      record.casesPer100k = casesPer100k;
+      this.records.push();
     }
   }
 
@@ -69,13 +73,13 @@ export class ZonesHistory {
     return this.zones.get(id);
   }
 
-  addEntry(id: number, date: string, cases7from100k: number): void {
+  addEntry(id: number, date: string, cases7from100k: number, casesPer100k: number): void {
     let historyEntry = this.getEntryById(id);
     if (historyEntry !== undefined) {
-      historyEntry.updateOrPushCasesForDate(date, cases7from100k);
+      historyEntry.updateOrPushCasesForDate(date, cases7from100k, casesPer100k);
     } else {
       historyEntry = new ZoneHistoryRecord(id);
-      historyEntry.updateOrPushCasesForDate(date, cases7from100k);
+      historyEntry.updateOrPushCasesForDate(date, cases7from100k, casesPer100k);
       this.zones.set(id, historyEntry);
     }
   }
@@ -94,7 +98,11 @@ export class ZonesHistory {
     this.zones.forEach((zoneHistoryEntry) => {
       const entry = {id: zoneHistoryEntry.id, dates: []};
       zoneHistoryEntry.records.forEach(record => {
-        entry.dates.push({date: record.dateTime.toFormat('dd.LL.yyyy'), cases7from100k: record.cases7from100k});
+        entry.dates.push({
+          date: record.dateTime.toFormat('dd.LL.yyyy'),
+          cases7from100k: record.cases7from100k,
+          casesPer100k: record.casesPer100k,
+        });
       });
       zonesToSave.push(entry);
     });
@@ -112,6 +120,13 @@ export class ZonesHistory {
           this.zones.set(zone.id, historyZoneEntry);
           zone.dates.forEach(date => {
             const historyDateEntry = new HistoryRecord(DateTime.fromFormat(date.date, 'dd.LL.yyyy'), date.cases7from100k);
+
+            if (date.casesPer100k !== undefined) {
+              historyDateEntry.casesPer100k = date.casesPer100k;
+            } else {
+              historyDateEntry.casesPer100k = 0;
+            }
+
             historyZoneEntry.records.push(historyDateEntry);
           });
         });

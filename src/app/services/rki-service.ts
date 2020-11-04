@@ -35,7 +35,7 @@ export class RKIService {
 
         this.history.load();
         this.zoneList.zones.forEach(zone => {
-          this.history.addEntry(zone.id, zone.updateDate, zone.cases7Per100k);
+          this.history.addEntry(zone.id, zone.updateDate, zone.cases7Per100k, zone.casesPer100k);
         });
         this.history.save();
 

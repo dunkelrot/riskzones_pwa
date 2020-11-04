@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Zone } from 'src/app/model/zones';
 import {Location} from '@angular/common';
 import {RKIService} from '../../services/rki-service';
 import {ActivatedRoute} from '@angular/router';
+import {toDateTime} from '../../model/history';
 
 @Component({
   selector: 'app-zone-info',
@@ -18,6 +19,8 @@ export class ZoneInfoComponent implements OnInit {
   cases7Per100k = '';
   cases7Per100kBL = '';
   casesPer100k = '';
+
+  isDataFromToday = true;
 
   constructor(private rkiService: RKIService, private location: Location, private route: ActivatedRoute) { }
 
@@ -36,6 +39,8 @@ export class ZoneInfoComponent implements OnInit {
         this.cases7Per100k = format.format(this.zone.cases7Per100k);
         this.cases7Per100kBL = format.format(this.zone.cases7BlPer100k);
 
+        const date = toDateTime(this.zone.updateDate);
+        this.isDataFromToday = date.diffNow('hours').hours <= 24;
       });
     }
   }
