@@ -32,7 +32,9 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { AlertToastComponent } from './alert/alert-toast/alert-toast.component';
 import {AlertService} from './services/alert-service';
 import { ZoneInfoComponent } from './zones/zone-info/zone-info.component';
-import { ZoneHistoryComponent } from './zones/zone-history/zone-history.component';
+import { ZoneHistoryCasesPer100kComponent } from './zones/zone-history-cases-per100k/zone-history-cases-per100k.component';
+import { BarGraphComponent } from './graphs/bar-graph/bar-graph.component';
+import { ZoneHistoryCases7Per100kComponent } from './zones/zone-history-cases7-per100k/zone-history-cases7-per100k.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { ZoneHistoryComponent } from './zones/zone-history/zone-history.componen
     SafeHtmlPipe,
     AlertToastComponent,
     ZoneInfoComponent,
-    ZoneHistoryComponent,
+    ZoneHistoryCasesPer100kComponent,
+    BarGraphComponent,
+    ZoneHistoryCases7Per100kComponent,
   ],
   imports: [
     BrowserModule,

@@ -31,7 +31,7 @@ export class ZoneInfoComponent implements OnInit {
       this.rkiService.getZones().subscribe(zones => {
         const idStr: string = params.id;
         const id = parseInt(idStr, 10);
-        this.zone = zones.getByID(id);
+        this.zone = zones.getByIdOrNull(id);
 
         this.population = format.format(this.zone.population);
         this.populationBL = format.format(this.zone.populationBL);

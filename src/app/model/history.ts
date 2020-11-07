@@ -9,9 +9,10 @@ export function stripDate(date: string): string {
 export function toDateTime(date: string): DateTime {
   return DateTime.fromFormat(date, 'dd.LL.yyyy').minus({days: 0});
 }
+
+
 export class HistoryRecord {
-  public casesPer100k: number;
-  constructor(public dateTime: DateTime, public cases7from100k: number) {
+  constructor(public dateTime: DateTime, public cases7from100k: number, public casesPer100k: number) {
   }
 }
 
@@ -22,13 +23,12 @@ export class ZoneHistoryRecord {
     this.records = new Array<HistoryRecord>();
   }
 
-  updateOrPushCasesForDate(date: string, cases7from100k: number, casesPer100k: number): void {
-    const dateTime = toDateTime(date);
+  updateOrPushCasesForDate(recordToAdd: HistoryRecord): void {
     let found = false;
     this.records.forEach((record) => {
-      if (record.dateTime.toMillis() === dateTime.toMillis()) {
-        record.cases7from100k = cases7from100k;
-        record.casesPer100k = casesPer100k;
+      if (record.dateTime.toMillis() === recordToAdd.dateTime.toMillis()) {
+        record.cases7from100k = recordToAdd.cases7from100k;
+        record.casesPer100k = recordToAdd.casesPer100k;
         found = true;
       }
     });
@@ -36,9 +36,7 @@ export class ZoneHistoryRecord {
       if (this.records.length >= MAX_DATES_COUNT) {
         this.records.shift();
       }
-      const record = new HistoryRecord(dateTime, cases7from100k);
-      record.casesPer100k = casesPer100k;
-      this.records.push();
+      this.records.push(recordToAdd);
     }
   }
 
@@ -74,12 +72,13 @@ export class ZonesHistory {
   }
 
   addEntry(id: number, date: string, cases7from100k: number, casesPer100k: number): void {
+    const recordToAdd = new HistoryRecord(toDateTime(date), cases7from100k, casesPer100k);
     let historyEntry = this.getEntryById(id);
     if (historyEntry !== undefined) {
-      historyEntry.updateOrPushCasesForDate(date, cases7from100k, casesPer100k);
+      historyEntry.updateOrPushCasesForDate(recordToAdd);
     } else {
       historyEntry = new ZoneHistoryRecord(id);
-      historyEntry.updateOrPushCasesForDate(date, cases7from100k, casesPer100k);
+      historyEntry.updateOrPushCasesForDate(recordToAdd);
       this.zones.set(id, historyEntry);
     }
   }
@@ -101,6 +100,7 @@ export class ZonesHistory {
         entry.dates.push({
           date: record.dateTime.toFormat('dd.LL.yyyy'),
           cases7from100k: record.cases7from100k,
+          cases7Per100k: record.cases7from100k,
           casesPer100k: record.casesPer100k,
         });
       });
@@ -119,18 +119,16 @@ export class ZonesHistory {
           const historyZoneEntry = new ZoneHistoryRecord(zone.id);
           this.zones.set(zone.id, historyZoneEntry);
           zone.dates.forEach(date => {
-            const historyDateEntry = new HistoryRecord(DateTime.fromFormat(date.date, 'dd.LL.yyyy'), date.cases7from100k);
-
+            let casesPer100k = 0;
             if (date.casesPer100k !== undefined) {
-              historyDateEntry.casesPer100k = date.casesPer100k;
-            } else {
-              historyDateEntry.casesPer100k = 0;
+              casesPer100k = date.casesPer100k;
             }
-
+            const historyDateEntry = new HistoryRecord(toDateTime(date.date), date.cases7from100k, casesPer100k);
             historyZoneEntry.records.push(historyDateEntry);
           });
         });
       } catch (ex) {
+        this.zones.clear();
         localStorage.removeItem('history');
       }
     }

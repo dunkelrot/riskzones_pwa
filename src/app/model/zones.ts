@@ -9,7 +9,7 @@ class ZoneColors {
   static riskLT100 = '#a90600';
   static riskLT200 = '#830300';
   static riskLT300 = '#6a0200';
-  static riskGT300 = '#4b0100';
+  static riskGT300 = '#3e0100';
 }
 
 export function roundUp(num, precision): number {
@@ -98,10 +98,11 @@ export class ZoneList {
     this.zones.push(zone);
   }
 
-  public sortByName(): void {
+  public sortByName(): ZoneList {
     this.zones.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
+    return this;
   }
 
   public sortByPositionIndex(): ZoneList {
@@ -117,7 +118,7 @@ export class ZoneList {
     return this;
   }
 
-  public getByID(id: number): Zone {
+  public getByIdOrNull(id: number): Zone {
     let result = null;
     this.zones.forEach((zone) => {
       if (zone.id === id) {
@@ -179,7 +180,7 @@ export class ZoneList {
       try {
         const selected = JSON.parse(session);
         selected.forEach((entry) => {
-          const zone = this.getByID(entry.id);
+          const zone = this.getByIdOrNull(entry.id);
           if (zone !== null) {
             zone.selected = true;
             zone.positionIndex = entry.position;

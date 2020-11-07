@@ -39,6 +39,12 @@ __[Marked JS](https://marked.js.org/)__
 __[Roboto Font](https://fonts.google.com/specimen/Roboto#standard-styles)__    
 [Lizenz](http://www.apache.org/licenses/LICENSE-2.0)
 
+__[D3](https://d3js.org/)__   
+[Lizenz](https://github.com/d3/d3/blob/master/LICENSE)
+ 
+__[Luxon](https://moment.github.io/luxon/)__  
+[Lizenz](https://github.com/moment/luxon/blob/master/license.md)
+
 __Wikimedia Commons__  
 [File:Karte Bundesrepublik Deutschland.svg](https://commons.wikimedia.org/wiki/File:Karte_Bundesrepublik_Deutschland.svg)  
 [Lizenz](https://creativecommons.org/licenses/by-sa/2.0/de/deed.en) / [Lizenz](https://creativecommons.org/licenses/by-sa/2.0/de/legalcode)

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZoneHistoryComponent } from './zone-history.component';
+import { ZoneHistoryCasesPer100kComponent } from './zone-history-cases-per100k.component';
 
 describe('ZoneHistoryComponent', () => {
-  let component: ZoneHistoryComponent;
-  let fixture: ComponentFixture<ZoneHistoryComponent>;
+  let component: ZoneHistoryCasesPer100kComponent;
+  let fixture: ComponentFixture<ZoneHistoryCasesPer100kComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ZoneHistoryComponent ]
+      declarations: [ ZoneHistoryCasesPer100kComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZoneHistoryComponent);
+    fixture = TestBed.createComponent(ZoneHistoryCasesPer100kComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
