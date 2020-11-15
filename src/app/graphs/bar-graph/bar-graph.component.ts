@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DataEntry} from '../../model/graph';
+import {SettingsService} from '../../services/settings-service';
 
 declare let d3: any;
 
@@ -25,16 +26,29 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
   private xAxis: any;
   private yAxis: any;
 
+  private dateFormatDefault = 'LLL dd';
+  private dateFormatShort = 'dd.LL';
+
+  private axisFontSizeDefault = '1.2em';
+  private axisFontSizeSmall = '0.8em';
+
   private color = 'steelblue';
 
   @ViewChild('barGraph', {static: true}) barGraph: ElementRef;
 
-  constructor() { }
+  constructor(private settingsService: SettingsService) { }
 
   ngOnInit(): void {
 
+    const numRecords = this.settingsService.settings.numberOfRecords;
+
+    let dateFormat = this.dateFormatDefault;
+    if (numRecords > 7) {
+      dateFormat = this.dateFormatShort;
+    }
+
     this.x = d3.scaleBand()
-      .domain(d3.range(7))
+      .domain(d3.range(numRecords))
       .range([this.margin.left, this.width - this.margin.right])
       .padding(0.1);
 
@@ -44,7 +58,7 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
 
     this.xAxis = gx => gx
       .attr('transform', `translate(0,${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(this.x).tickFormat(i => this.dataSet[i].dateTime.toFormat('LLL dd')).tickSizeOuter(0));
+      .call(d3.axisBottom(this.x).tickFormat(i => this.dataSet[i].dateTime.toFormat(dateFormat)).tickSizeOuter(0));
 
     this.yAxis = (gy) => {
       gy.attr('transform', `translate(${this.margin.left},0)`)
@@ -54,6 +68,12 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+    const numRecords = this.settingsService.settings.numberOfRecords;
+    let axisFontSize = this.axisFontSizeDefault;
+    if (numRecords > 10) {
+      axisFontSize = this.axisFontSizeSmall;
+    }
 
     this.svg = d3.select(this.barGraph.nativeElement)
       .attr('viewBox', [0, 0, this.width + this.margin.left + this.margin.right, this.height]);
@@ -77,7 +97,7 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
 
     d3.selectAll('.axis>.tick>text')
       .each(function(): void {
-        d3.select(this).style('font-size', '1.2em');
+        d3.select(this).style('font-size', axisFontSize);
       });
   }
 

@@ -1,7 +1,5 @@
 import {DateTime} from 'luxon';
 
-const MAX_DATES_COUNT = 7;
-
 export function stripDate(date: string): string {
   return date.substring(0, date.length - date.indexOf('00:00 Uhr') + 1);
 }
@@ -23,7 +21,7 @@ export class ZoneHistoryRecord {
     this.records = new Array<HistoryRecord>();
   }
 
-  updateOrPushCasesForDate(recordToAdd: HistoryRecord): void {
+  updateOrPushCasesForDate(recordToAdd: HistoryRecord, maxEntries: number): void {
     let found = false;
     this.records.forEach((record) => {
       if (record.dateTime.toMillis() === recordToAdd.dateTime.toMillis()) {
@@ -33,7 +31,7 @@ export class ZoneHistoryRecord {
       }
     });
     if (!found) {
-      if (this.records.length >= MAX_DATES_COUNT) {
+      if (this.records.length >= maxEntries) {
         this.records.shift();
       }
       this.records.push(recordToAdd);
@@ -58,7 +56,6 @@ export class ZoneHistoryRecord {
   }
 }
 
-
 export class ZonesHistory {
 
   zones: Map<number, ZoneHistoryRecord>;
@@ -71,14 +68,13 @@ export class ZonesHistory {
     return this.zones.get(id);
   }
 
-  addEntry(id: number, date: string, cases7from100k: number, casesPer100k: number): void {
-    const recordToAdd = new HistoryRecord(toDateTime(date), cases7from100k, casesPer100k);
+  addEntry(id: number, recordToAdd: HistoryRecord, maxEntries: number): void {
     let historyEntry = this.getEntryById(id);
     if (historyEntry !== undefined) {
-      historyEntry.updateOrPushCasesForDate(recordToAdd);
+      historyEntry.updateOrPushCasesForDate(recordToAdd, maxEntries);
     } else {
       historyEntry = new ZoneHistoryRecord(id);
-      historyEntry.updateOrPushCasesForDate(recordToAdd);
+      historyEntry.updateOrPushCasesForDate(recordToAdd, maxEntries);
       this.zones.set(id, historyEntry);
     }
   }

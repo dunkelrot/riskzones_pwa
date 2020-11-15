@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Covid-19 Risikogebiete</span>
+    <span>Details zu den Fallzahlen</span>
     <span class="crz-spacer"></span>
     <span class="tb-actions">
       <button mat-button (click)="onHome()"><mat-icon>home</mat-icon></button>
@@ -13,7 +13,7 @@
 </div>
 
 <div *ngIf="zone !== null">
-  <div class="crz-zone-info">
+  <div class="crz-card crz-zone-info">
     <div class="crz-zone-info-title">
       {{zone.name}}
     </div>
@@ -51,6 +51,6 @@
   </div>
 
   <app-zone-history-cases7-per100k [zone]="zone"></app-zone-history-cases7-per100k>
-  <app-zone-history [zone]="zone"></app-zone-history>
+  <app-zone-history *ngIf="showTotalCasesPer100k" [zone]="zone"></app-zone-history>
 </div>
 

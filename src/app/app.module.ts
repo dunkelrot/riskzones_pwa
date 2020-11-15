@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -20,7 +20,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ZoneSelectComponent } from './zones/zone-select/zone-select.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
 import { AboutComponent } from './info/about/about.component';
@@ -35,6 +35,9 @@ import { ZoneInfoComponent } from './zones/zone-info/zone-info.component';
 import { ZoneHistoryCasesPer100kComponent } from './zones/zone-history-cases-per100k/zone-history-cases-per100k.component';
 import { BarGraphComponent } from './graphs/bar-graph/bar-graph.component';
 import { ZoneHistoryCases7Per100kComponent } from './zones/zone-history-cases7-per100k/zone-history-cases7-per100k.component';
+import { SettingsMainComponent } from './settings/settings-main/settings-main.component';
+import {getSettings, SettingsService} from './services/settings-service';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,7 @@ import { ZoneHistoryCases7Per100kComponent } from './zones/zone-history-cases7-p
     ZoneHistoryCasesPer100kComponent,
     BarGraphComponent,
     ZoneHistoryCases7Per100kComponent,
+    SettingsMainComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,11 +75,19 @@ import { ZoneHistoryCases7Per100kComponent } from './zones/zone-history-cases7-p
     DragDropModule,
     MatSnackBarModule,
     ScrollingModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [
+    { provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: getSettings,
+      deps: [SettingsService]
+    },
     RKIService,
     HelpService,
     AlertService,
+    SettingsService,
   ],
   bootstrap: [AppComponent]
 })

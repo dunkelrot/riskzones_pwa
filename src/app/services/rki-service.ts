@@ -3,7 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {ZoneList, ZoneListFactory} from '../model/zones';
 import {catchError, map, retry} from 'rxjs/operators';
-import {ZonesHistory} from '../model/history';
+import {HistoryRecord, toDateTime, ZonesHistory} from '../model/history';
+import {SettingsService} from './settings-service';
 
 
 @Injectable()
@@ -18,7 +19,7 @@ export class RKIService {
 
   private headers: HttpHeaders = new HttpHeaders();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private settingsService: SettingsService) {
     this.headers.append('Content-Type', 'application/json');
   }
 
@@ -35,7 +36,8 @@ export class RKIService {
 
         this.history.load();
         this.zoneList.zones.forEach(zone => {
-          this.history.addEntry(zone.id, zone.updateDate, zone.cases7Per100k, zone.casesPer100k);
+          const historyRecord = new HistoryRecord(toDateTime(zone.updateDate), zone.cases7Per100k, zone.casesPer100k);
+          this.history.addEntry(zone.id, historyRecord, this.settingsService.settings.numberOfRecords);
         });
         this.history.save();
 

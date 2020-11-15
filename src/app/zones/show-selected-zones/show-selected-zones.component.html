@@ -5,6 +5,7 @@
       <span class="crz-spacer"></span>
       <span class="crz-tb-actions">
         <button mat-button (click)="onAbout()"><mat-icon>info</mat-icon></button>
+        <button mat-button (click)="onSettings()"><mat-icon>settings</mat-icon></button>
       </span>
     </mat-toolbar>
   </div>
@@ -17,6 +18,7 @@
       <div *ngIf="zoneList.valid === true">
         <div cdkDropList (cdkDropListDropped)="drop($event)" class="crz-zone-list"  [style.height.px]="svHeight">
           <app-zone-details *ngFor="let zone of selectedZoneList" [zone]="zone"></app-zone-details>
+          <div style="min-height: 2em"></div>
         </div>
         <div class="crz-select-zones">
           <button class="crz-zone-add-button" mat-fab color="accent" aria-label="add zone" (click)="onSelectZones()">

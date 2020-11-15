@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import {RKIService} from '../../services/rki-service';
 import {ActivatedRoute} from '@angular/router';
 import {toDateTime} from '../../model/history';
+import {SettingsService} from '../../services/settings-service';
 
 @Component({
   selector: 'app-zone-info',
@@ -21,10 +22,13 @@ export class ZoneInfoComponent implements OnInit {
   casesPer100k = '';
 
   isDataFromToday = true;
+  showTotalCasesPer100k = false;
 
-  constructor(private rkiService: RKIService, private location: Location, private route: ActivatedRoute) { }
+  constructor(private rkiService: RKIService, private location: Location, private route: ActivatedRoute,
+              private settingsService: SettingsService) { }
 
   ngOnInit(): void {
+    this.showTotalCasesPer100k = this.settingsService.settings.showCasesTotalPer100k;
     const format = Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true, maximumFractionDigits: 1 });
     const params = this.route.snapshot.params;
     if (params.id !== undefined) {

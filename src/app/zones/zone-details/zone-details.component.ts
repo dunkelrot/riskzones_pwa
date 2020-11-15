@@ -15,7 +15,6 @@ export class ZoneDetailsComponent implements OnInit {
   cases7Per100k = '';
   diffInPercent = 0;
   trendColor = '';
-  trendFontWeight = 400;
 
   trendingUp = 'trending_up';
   trendingDown = 'trending_down';
@@ -46,4 +45,29 @@ export class ZoneDetailsComponent implements OnInit {
   onShowInfo(): void {
     this.router.navigate(['/info', this.zone.id]);
   }
+
+  getZoneColor(zone: Zone): string {
+    let color = 'riskZero';
+
+    if (zone.cases7Per100k < 10) {
+      color = 'riskLT10';
+    } else if (zone.cases7Per100k < 20) {
+      color = 'riskLT20';
+    } else if (zone.cases7Per100k < 35) {
+      color = 'riskLT35';
+    } else if (zone.cases7Per100k < 50) {
+      color = 'riskLT50';
+    } else if (zone.cases7Per100k < 100) {
+      color = 'riskLT100';
+    } else if (zone.cases7Per100k < 200) {
+      color = 'riskLT200';
+    } else if (zone.cases7Per100k < 300) {
+      color = 'riskLT300';
+    } else if (zone.cases7Per100k >= 300) {
+      color = 'riskGT300';
+    }
+
+    return 'crz-color-box ' + color;
+  }
+
 }

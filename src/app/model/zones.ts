@@ -1,17 +1,5 @@
 import {stripDate} from './history';
 
-class ZoneColors {
-  static riskZero = '#ffffff';
-  static riskLT10 = '#f6f0e1';
-  static riskLT20 = '#f2b84a';
-  static riskLT35 = '#de8735';
-  static riskLT50 = '#c14119';
-  static riskLT100 = '#a90600';
-  static riskLT200 = '#830300';
-  static riskLT300 = '#6a0200';
-  static riskGT300 = '#3e0100';
-}
-
 export function roundUp(num, precision): number {
   precision = Math.pow(10, precision);
   return Math.ceil(num * precision) / precision;
@@ -63,29 +51,6 @@ export class Zone {
   selected = false;
   positionIndex = 0;
 
-  get color(): string {
-    return Zone.zoneColor(this.cases7Per100k);
-  }
-
-  static zoneColor(cases: number): string {
-    if (cases < 10) {
-      return ZoneColors.riskLT10;
-    } else if (cases < 20) {
-      return ZoneColors.riskLT20;
-    } else if (cases < 35) {
-      return ZoneColors.riskLT35;
-    } else if (cases < 50) {
-      return ZoneColors.riskLT50;
-    } else if (cases < 100) {
-      return ZoneColors.riskLT100;
-    } else if (cases < 200) {
-      return ZoneColors.riskLT200;
-    } else if (cases < 300) {
-      return ZoneColors.riskLT300;
-    } else {
-      return ZoneColors.riskGT300;
-    }
-  }
 }
 
 export class ZoneList {

@@ -57,6 +57,10 @@ export class ShowSelectedZonesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/about']);
   }
 
+  onSettings(): void {
+    this.router.navigate(['/settings']);
+  }
+
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.selectedZoneList, event.previousIndex, event.currentIndex);
     this.selectedZoneList.forEach((zone, index) => {

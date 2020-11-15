@@ -27,13 +27,12 @@
 .crz-no-data {
   flex-direction: column;
   margin-top: 5em;
-  color: dimgrey;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2em;
   line-height: 1.1em;
-  text-align:center
+  text-align:center;
 }
 
 .crz-error-msg {
@@ -44,5 +43,4 @@
 .crz-error-subtext {
   font-size: 0.4em;
   margin-top: 0.4em;
-
 }

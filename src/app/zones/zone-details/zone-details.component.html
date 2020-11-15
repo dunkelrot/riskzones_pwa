@@ -1,6 +1,6 @@
-<div class="crz-zone-card" cdkDrag>
+<div class="crz-card" cdkDrag>
   <div class="crz-zone-details">
-    <div class="crz-color-box" [style.backgroundColor]="zone.color">
+    <div [ngClass]="getZoneColor(zone)">
     </div>
     <div>
       <div class="crz-region">{{zone.region}} / {{zone.description}}</div>
@@ -17,7 +17,7 @@
     <div class="crz-spacer">
     </div>
     <div >
-      <button (click)="onShowInfo()"class="crz-info" mat-icon-button>
+      <button (click)="onShowInfo()" class="crz-info" mat-icon-button>
         <mat-icon>info</mat-icon>
       </button>
     </div>
