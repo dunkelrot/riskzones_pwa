@@ -1,8 +1,9 @@
-<div class="crz-card" cdkDrag>
+<div #details class="crz-card" cdkDrag>
   <div class="crz-zone-details">
     <div [ngClass]="getZoneColor(zone)">
     </div>
     <div>
+      <div [matMenuTriggerFor]="menu"></div>
       <div class="crz-region">{{zone.region}} / {{zone.description}}</div>
       <div class="crz-zone">{{zone.name}}</div>
       <div class="crz-cases">
@@ -27,5 +28,15 @@
       </div>
     </div>
   </div>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onRemove()">
+      <mat-icon>delete</mat-icon>
+      <span>Entfernen</span>
+    </button>
+  </mat-menu>
+
 </div>
+
+
 

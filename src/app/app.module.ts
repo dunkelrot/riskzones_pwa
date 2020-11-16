@@ -1,11 +1,10 @@
+import { ZonesListComponent } from './zones/zones-list/zones-list.component';
 import { BrowserModule } from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { ShowSelectedZonesComponent } from './zones/show-selected-zones/show-selected-zones.component';
-import { SelectZonesComponent } from './zones/select-zones/select-zones.component';
 import {RouterModule} from '@angular/router';
 import {routing} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -38,12 +37,14 @@ import { ZoneHistoryCases7Per100kComponent } from './zones/zone-history-cases7-p
 import { SettingsMainComponent } from './settings/settings-main/settings-main.component';
 import {getSettings, SettingsService} from './services/settings-service';
 import {MatSelectModule} from '@angular/material/select';
+import { ZoneSelectionComponent } from './zones/zone-selection/zones-selection.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShowSelectedZonesComponent,
-    SelectZonesComponent,
+    ZonesListComponent,
+    ZoneSelectionComponent,
     ZoneDetailsComponent,
     ZoneSelectComponent,
     AboutComponent,
@@ -77,6 +78,7 @@ import {MatSelectModule} from '@angular/material/select';
     ScrollingModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatMenuModule,
   ],
   providers: [
     { provide: APP_INITIALIZER,

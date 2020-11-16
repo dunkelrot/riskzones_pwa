@@ -11,6 +11,19 @@
   <div class="crz-settings-list crz-card" [formGroup]="formGroup">
     <div class="crz-setting-entry">
       <div>
+        Farbschema
+      </div>
+      <mat-form-field>
+        <mat-select formControlName="themeType">
+          <mat-option *ngFor="let themeEntry of themeEntries" [value]="themeEntry">
+            {{themeEntry.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <hr>
+    <div class="crz-setting-entry">
+      <div>
         Anzahl der gespeicherten Tage
       </div>
       <mat-form-field>
@@ -27,16 +40,7 @@
     </div>
     <hr>
     <div class="crz-setting-entry">
-      <div>
-        Farbschema
-      </div>
-      <mat-form-field>
-        <mat-select formControlName="themeType">
-          <mat-option *ngFor="let themeEntry of themeEntries" [value]="themeEntry">
-            {{themeEntry.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-slide-toggle formControlName="animatedGraphs">Animation für Diagramme</mat-slide-toggle>
     </div>
   </div>
 </div>

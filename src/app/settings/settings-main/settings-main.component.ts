@@ -28,6 +28,7 @@ export class SettingsMainComponent implements OnInit {
       showCasesTotal: settingsService.settings.showCasesTotalPer100k,
       interpolateMissingRecords: settingsService.settings.interpolateMissingRecords,
       themeType: this.getThemeEntryByType(settingsService.settings.theme),
+      animatedGraphs: this.settingsService.settings.animatedGraphs,
     });
   }
 
@@ -39,6 +40,7 @@ export class SettingsMainComponent implements OnInit {
     this.settingsService.settings.numberOfRecords = this.formGroup.get('numberOfRecords').value;
     this.settingsService.settings.showCasesTotalPer100k = this.formGroup.get('showCasesTotal').value;
     this.settingsService.settings.theme = this.formGroup.get('themeType').value.type;
+    this.settingsService.settings.animatedGraphs = this.formGroup.get('animatedGraphs').value;
     this.settingsService.saveToStorage();
     this.location.back();
   }

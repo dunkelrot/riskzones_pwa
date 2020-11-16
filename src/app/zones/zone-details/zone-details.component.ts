@@ -1,14 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
 import { Zone } from 'src/app/model/zones';
 import {RKIService} from '../../services/rki-service';
 import {Router} from '@angular/router';
+import { ElementRef } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { fromEvent, of, timer } from 'rxjs';
+import { delay, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { fn } from '@angular/compiler/src/output/output_ast';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-zone-details',
   templateUrl: './zone-details.component.html',
   styleUrls: ['./zone-details.component.css']
 })
-export class ZoneDetailsComponent implements OnInit {
+export class ZoneDetailsComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line:no-input-rename
   @Input('zone') zone: Zone;
@@ -16,10 +24,20 @@ export class ZoneDetailsComponent implements OnInit {
   diffInPercent = 0;
   trendColor = '';
 
+  index = 0;
   trendingUp = 'trending_up';
   trendingDown = 'trending_down';
 
+  @ViewChild('details') detailsDiv: ElementRef = null;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+
+  @Output() removeZone = new EventEmitter<Zone>();
+
   constructor(private rkiService: RKIService, private router: Router) { }
+
+  ngAfterViewInit(): void {
+    this.onWaitForLongClick();
+  }
 
   ngOnInit(): void {
     const format = new Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true, maximumFractionDigits: 1 });
@@ -40,6 +58,8 @@ export class ZoneDetailsComponent implements OnInit {
       this.trendingUp = this.trendingUp + ' ' + this.trendingUp;
       this.trendingDown = this.trendingDown + ' ' + this.trendingDown;
     }
+
+
   }
 
   onShowInfo(): void {
@@ -68,6 +88,28 @@ export class ZoneDetailsComponent implements OnInit {
     }
 
     return 'crz-color-box ' + color;
+  }
+
+  onWaitForLongClick(): void {
+
+    const longClick = () => {
+      return of(0).pipe(
+        delay(700),
+        takeUntil(fromEvent(this.detailsDiv.nativeElement, 'mouseup')),
+      );
+    };
+
+    fromEvent(this.detailsDiv.nativeElement, 'mousedown').pipe(
+      switchMap( evt => {
+        return longClick();
+      })
+    ).subscribe(() => {
+      this.trigger.openMenu();
+    });
+  }
+
+  onRemove(): void {
+    this.removeZone.emit(this.zone);
   }
 
 }

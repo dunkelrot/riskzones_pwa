@@ -56,7 +56,7 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
       .domain([0, d3.max(this.dataSet, d => d.value)]).nice()
       .range([this.height - this.margin.bottom, this.margin.top]);
 
-    this.xAxis = gx => gx
+    this.xAxis = (gx) => gx
       .attr('transform', `translate(0,${this.height - this.margin.bottom})`)
       .call(d3.axisBottom(this.x).tickFormat(i => this.dataSet[i].dateTime.toFormat(dateFormat)).tickSizeOuter(0));
 
@@ -65,6 +65,7 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
         .call(d3.axisLeft(this.y).ticks(4))
         .call(g => g.select('.domain').remove());
     };
+
   }
 
   ngAfterViewInit(): void {
@@ -78,13 +79,13 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
     this.svg = d3.select(this.barGraph.nativeElement)
       .attr('viewBox', [0, 0, this.width + this.margin.left + this.margin.right, this.height]);
 
-    this.svg.selectAll('g').data(this.dataSet)
+    const rect = this.svg.selectAll('g').data(this.dataSet)
       .join('g')
       .attr('fill', this.color)
       .append('rect')
       .attr('x', (d, i) => this.x(i))
-      .attr('y', d => this.y(d.value))
-      .attr('height', d => this.y(0) - this.y(d.value))
+      .attr('y', this.height - this.margin.bottom)
+      .attr('height', 0)
       .attr('width', this.x.bandwidth());
 
     this.svg.append('g')
@@ -99,6 +100,23 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
       .each(function(): void {
         d3.select(this).style('font-size', axisFontSize);
       });
+
+    const yMax = d3.max(this.dataSet, d => d.value);
+    const transition = (duration) => {
+      this.y.domain([0, yMax]);
+      rect.transition()
+        .duration(duration)
+        .delay((d, i) => i * 40)
+        .attr('y', d => this.y(d.value))
+        .attr('height', d => this.y(0) - this.y(d.value));
+    };
+
+    if (this.settingsService.settings.animatedGraphs) {
+      transition(600);
+    } else {
+      rect.attr('y', d => this.y(d.value))
+          .attr('height', d => this.y(0) - this.y(d.value));
+    }
   }
 
 

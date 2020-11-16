@@ -5,6 +5,7 @@ interface ISettings {
   interpolateMissingRecords: boolean;
   showCasesTotalPer100k: boolean;
   theme: string;
+  animatedGraphs: boolean;
 }
 
 export class Settings {
@@ -12,6 +13,7 @@ export class Settings {
   numberOfRecords = 7;
   interpolateMissingRecords = false;
   showCasesTotalPer100k = true;
+  animatedGraphs = false;
 
   // tslint:disable-next-line:variable-name
   _theme = 'SYSTEM_DEFAULT';
@@ -31,6 +33,8 @@ export class Settings {
     this.numberOfRecords = 7;
     this.interpolateMissingRecords = false;
     this.showCasesTotalPer100k = true;
+    this.animatedGraphs = false;
+    this.theme = 'SYSTEM_DEFAULT';
   }
 
   save(): Settings {
@@ -39,6 +43,7 @@ export class Settings {
     settings.numberOfRecords = this.numberOfRecords;
     settings.showCasesTotalPer100k = this.showCasesTotalPer100k;
     settings.theme = this.theme;
+    settings.animatedGraphs = this.animatedGraphs;
     localStorage.setItem('settings', JSON.stringify(settings));
     return this;
   }
@@ -60,6 +65,9 @@ export class Settings {
         }
         if (settings.theme !== undefined) {
           this.theme = settings.theme;
+        }
+        if (settings.animatedGraphs !== undefined) {
+          this.animatedGraphs = settings.animatedGraphs;
         }
       } catch (ex) {
         localStorage.removeItem('settings');
