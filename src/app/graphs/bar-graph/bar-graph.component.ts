@@ -33,6 +33,7 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
   private axisFontSizeSmall = '0.8em';
 
   private color = 'steelblue';
+  private skipXAxisTicks = false;
 
   @ViewChild('barGraph', {static: true}) barGraph: ElementRef;
 
@@ -45,6 +46,17 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
     let dateFormat = this.dateFormatDefault;
     if (numRecords > 7) {
       dateFormat = this.dateFormatShort;
+      if (numRecords > 14 ) {
+        this.skipXAxisTicks = true;
+        dateFormat = this.dateFormatShort;
+      }
+    }
+
+    // we start on the left with axis labels but we want to show the last (=current date) with a tick
+    let showOdd = true;
+    if (numRecords % 2 === 0) {
+      // => the last entry has an odd record index (array index starts with 0!)
+      showOdd = false;
     }
 
     this.x = d3.scaleBand()
@@ -58,7 +70,15 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
 
     this.xAxis = (gx) => gx
       .attr('transform', `translate(0,${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(this.x).tickFormat(i => this.dataSet[i].dateTime.toFormat(dateFormat)).tickSizeOuter(0));
+      .call(d3.axisBottom(this.x).tickFormat((d, i) => {
+        let value = this.dataSet[i].dateTime.toFormat(dateFormat);
+        if (this.skipXAxisTicks === true) {
+          if ((i % 2 !== 0) === showOdd) {
+            value = '';
+          }
+        }
+        return value;
+      }).tickSizeOuter(0));
 
     this.yAxis = (gy) => {
       gy.attr('transform', `translate(${this.margin.left},0)`)
@@ -74,6 +94,12 @@ export class BarGraphComponent implements OnInit, AfterViewInit {
     let axisFontSize = this.axisFontSizeDefault;
     if (numRecords > 10) {
       axisFontSize = this.axisFontSizeSmall;
+      if (numRecords > 15) {
+        axisFontSize = this.axisFontSizeDefault;
+        if (numRecords > 20) {
+          axisFontSize = this.axisFontSizeSmall;
+        }
+      }
     }
 
     this.svg = d3.select(this.barGraph.nativeElement)

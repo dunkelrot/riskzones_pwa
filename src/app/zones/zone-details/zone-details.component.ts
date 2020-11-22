@@ -28,7 +28,7 @@ export class ZoneDetailsComponent implements OnInit, AfterViewInit {
   trendingUp = 'trending_up';
   trendingDown = 'trending_down';
 
-  @ViewChild('details') detailsDiv: ElementRef = null;
+  @ViewChild('longClickDiv') longClickDiv: ElementRef = null;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   @Output() removeZone = new EventEmitter<Zone>();
@@ -36,7 +36,7 @@ export class ZoneDetailsComponent implements OnInit, AfterViewInit {
   constructor(private rkiService: RKIService, private router: Router) { }
 
   ngAfterViewInit(): void {
-    this.onWaitForLongClick();
+    this.listenForLongClick();
   }
 
   ngOnInit(): void {
@@ -90,16 +90,17 @@ export class ZoneDetailsComponent implements OnInit, AfterViewInit {
     return 'crz-color-box ' + color;
   }
 
-  onWaitForLongClick(): void {
-
+  listenForLongClick(): void {
+    // issue an event after 100ms if mouseup does not happen until then
     const longClick = () => {
       return of(0).pipe(
         delay(700),
-        takeUntil(fromEvent(this.detailsDiv.nativeElement, 'mouseup')),
+        takeUntil(fromEvent(this.longClickDiv.nativeElement, 'mouseup')),
       );
     };
 
-    fromEvent(this.detailsDiv.nativeElement, 'mousedown').pipe(
+    // listen for mousedown and return a 'longClick' inner observable
+    fromEvent(this.longClickDiv.nativeElement, 'mousedown').pipe(
       switchMap( evt => {
         return longClick();
       })

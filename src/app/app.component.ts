@@ -21,14 +21,15 @@ export class AppComponent implements OnInit {
   }
 
   changeTheme(): void {
+    const element = document.getElementById('themeAsset') as any;
     if (this.settingsService.settings.theme === 'SYSTEM_DEFAULT') {
       if (window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        const element = document.getElementById('themeAsset') as any;
         element.href = `assets/styles/pink-bluegrey.css`;
+      } else {
+        element.href = `assets/styles/indigo-pink.css`;
       }
     } else {
-      const element = document.getElementById('themeAsset') as any;
       if (this.settingsService.settings.theme === 'DARK_MODE') {
         element.href = `assets/styles/pink-bluegrey.css`;
       } else {
