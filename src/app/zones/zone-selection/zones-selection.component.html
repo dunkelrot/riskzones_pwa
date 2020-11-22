@@ -1,0 +1,46 @@
+<div class="crz-main-view">
+
+  <div #toolbar>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Land- und Stadtkreise</span>
+        <span class="crz-spacer"></span>
+        <span class="crz-tb-actions">
+        <button mat-icon-button (click)="onHome()"><mat-icon>home</mat-icon></button>
+        <button mat-icon-button [disabled]="notDirty" (click)="onSave()"><mat-icon>save</mat-icon></button>
+        <mat-slide-toggle class="crz-tb-toggle" (change)="onToggleList($event)"></mat-slide-toggle>
+      </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="crz-search-field">
+      <mat-form-field class="crz-search-value">
+        <mat-label>Name</mat-label>
+        <label>
+          <input matInput type="text" autocomplete="off" [(ngModel)]="zoneSearchValue" (change)="onChange()">
+        </label>
+        <button mat-button *ngIf="zoneSearchValue" matSuffix mat-icon-button aria-label="Clear"
+                (click)="onClearSearchFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button class="crz-search-button" mat-icon-button (click)="onFilter()"><mat-icon>search</mat-icon></button>
+    </div>
+  </div>
+
+  <div>
+    <div *ngIf="filteredZones === null">
+      <mat-spinner class="crz-spinner-centered"></mat-spinner>
+    </div>
+    <div *ngIf="filteredZones !== null">
+      <div class="crz-selection-list">
+        <cdk-virtual-scroll-viewport itemSize="40" [style.height.px]="svHeight" class="crz-zones-list-viewport" #scrollView>
+          <app-zone-select *cdkVirtualFor="let zone of filteredZones" [zone]="zone"
+                           (zoneSelected)="onZoneSelected()"></app-zone-select>
+        </cdk-virtual-scroll-viewport>
+      </div>
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,35 @@
+
+.crz-search-value {
+  padding: 0.6em;
+  width:95%;
+  margin-left: 0.8em;
+}
+
+.crz-search-field {
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.crz-search-button {
+  margin-right: 1em;
+}
+
+.crz-tb-toggle {
+  margin-right: 0.4em;
+  margin-left: 0.4em;
+}
+
+.crz-selection-list {
+}
+
+.crz-zones-list-viewport {
+  width: 100%;
+  border-top: 1px solid gainsboro;
+}
+
+.crz-main-view {
+  overscroll-behavior: none;
+}
+

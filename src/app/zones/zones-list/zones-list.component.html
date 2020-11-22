@@ -1,0 +1,39 @@
+<div class="crz-main-view">
+  <div #toolbar class="crz-main-toolbar">
+    <mat-toolbar  color="primary">
+      <span>Covid-19 Risikogebiete</span>
+      <span class="crz-spacer"></span>
+      <span class="crz-tb-actions">
+        <button *ngIf="showShare" mat-icon-button (click)="onShare()"><mat-icon>share</mat-icon></button>
+        <button mat-icon-button (click)="onAbout()"><mat-icon>info</mat-icon></button>
+        <button mat-icon-button (click)="onSettings()"><mat-icon>settings</mat-icon></button>
+      </span>
+    </mat-toolbar>
+  </div>
+  <div>
+    <div *ngIf="zoneList === null">
+      <mat-spinner class="crz-spinner-centered"></mat-spinner>
+    </div>
+
+    <div *ngIf="zoneList !== null">
+      <div *ngIf="zoneList.valid === true">
+        <div cdkDropList (cdkDropListDropped)="drop($event)" class="crz-zone-list"  [style.height.px]="svHeight">
+          <app-zone-details *ngFor="let zone of selectedZoneList" [zone]="zone" (removeZone)="onRemoveZone($event)"></app-zone-details>
+          <div style="min-height: 2em"></div>
+        </div>
+        <div class="crz-select-zones">
+          <button class="crz-zone-add-button" mat-fab color="accent" aria-label="add zone" (click)="onSelectZones()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="zoneList.valid === false">
+        <div class="crz-no-data">
+          <div class="crz-error-msg">{{error}}</div>
+          <div class="crz-error-subtext">Bitte die Internetverbindung prüfen und anschließend die Seite neu laden bzw. die App neu starten.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
