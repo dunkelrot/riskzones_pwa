@@ -26,6 +26,8 @@ export class SettingsMainComponent implements OnInit {
     this.formGroup = formBuilder.group({
       numberOfRecords: settingsService.settings.numberOfRecords,
       showCasesTotal: settingsService.settings.showCasesTotalPer100k,
+      showCases7BlPer100k: settingsService.settings.showCases7BlPer100k,
+      showDeaths: settingsService.settings.showDeaths,
       interpolateMissingRecords: settingsService.settings.interpolateMissingRecords,
       themeType: this.getThemeEntryByType(settingsService.settings.theme),
       animatedGraphs: this.settingsService.settings.animatedGraphs,
@@ -39,6 +41,8 @@ export class SettingsMainComponent implements OnInit {
   onSave(): void {
     this.settingsService.settings.numberOfRecords = this.formGroup.get('numberOfRecords').value;
     this.settingsService.settings.showCasesTotalPer100k = this.formGroup.get('showCasesTotal').value;
+    this.settingsService.settings.showCases7BlPer100k = this.formGroup.get('showCases7BlPer100k').value;
+    this.settingsService.settings.showDeaths = this.formGroup.get('showDeaths').value;
     this.settingsService.settings.theme = this.formGroup.get('themeType').value.type;
     this.settingsService.settings.animatedGraphs = this.formGroup.get('animatedGraphs').value;
     this.settingsService.saveToStorage();

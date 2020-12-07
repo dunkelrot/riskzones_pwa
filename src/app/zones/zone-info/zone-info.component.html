@@ -51,6 +51,8 @@
   </div>
 
   <app-zone-history-cases7-per100k [zone]="zone"></app-zone-history-cases7-per100k>
+  <app-zone-history-cases7-bl-per100k *ngIf="showTotalCases7BlPer100k" [zone]="zone"></app-zone-history-cases7-bl-per100k>
   <app-zone-history *ngIf="showTotalCasesPer100k" [zone]="zone"></app-zone-history>
+  <app-zone-history-deaths *ngIf="showDeaths" [zone]="zone"></app-zone-history-deaths>
 </div>
 

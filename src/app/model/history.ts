@@ -10,7 +10,8 @@ export function toDateTime(date: string): DateTime {
 
 
 export class HistoryRecord {
-  constructor(public dateTime: DateTime, public cases7from100k: number, public casesPer100k: number) {
+  constructor(public dateTime: DateTime, public cases7from100k: number,
+              public casesPer100k: number, public cases7BlPer100k: number, public deaths: number) {
   }
 }
 
@@ -27,6 +28,8 @@ export class ZoneHistoryRecord {
       if (record.dateTime.toMillis() === recordToAdd.dateTime.toMillis()) {
         record.cases7from100k = recordToAdd.cases7from100k;
         record.casesPer100k = recordToAdd.casesPer100k;
+        record.cases7BlPer100k = recordToAdd.cases7BlPer100k;
+        record.deaths = recordToAdd.deaths;
         found = true;
       }
     });
@@ -98,6 +101,8 @@ export class ZonesHistory {
           cases7from100k: record.cases7from100k,
           cases7Per100k: record.cases7from100k,
           casesPer100k: record.casesPer100k,
+          cases7BlPer100k: record.cases7BlPer100k,
+          deaths: record.deaths,
         });
       });
       zonesToSave.push(entry);
@@ -119,7 +124,8 @@ export class ZonesHistory {
             if (date.casesPer100k !== undefined) {
               casesPer100k = date.casesPer100k;
             }
-            const historyDateEntry = new HistoryRecord(toDateTime(date.date), date.cases7from100k, casesPer100k);
+            const historyDateEntry = new HistoryRecord(toDateTime(date.date),
+              date.cases7from100k, casesPer100k, date.cases7BlPer100k, date.deaths);
             historyZoneEntry.records.push(historyDateEntry);
           });
         });

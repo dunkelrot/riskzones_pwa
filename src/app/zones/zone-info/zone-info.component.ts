@@ -23,12 +23,17 @@ export class ZoneInfoComponent implements OnInit {
 
   isDataFromToday = true;
   showTotalCasesPer100k = false;
+  showTotalCases7BlPer100k = false;
+  showDeaths = false;
 
   constructor(private rkiService: RKIService, private location: Location, private route: ActivatedRoute,
               private settingsService: SettingsService) { }
 
   ngOnInit(): void {
     this.showTotalCasesPer100k = this.settingsService.settings.showCasesTotalPer100k;
+    this.showDeaths = this.settingsService.settings.showDeaths;
+    this.showTotalCases7BlPer100k = this.settingsService.settings.showCases7BlPer100k;
+
     const format = Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true, maximumFractionDigits: 1 });
     const params = this.route.snapshot.params;
     if (params.id !== undefined) {

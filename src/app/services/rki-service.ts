@@ -15,7 +15,7 @@ export class RKIService {
 
   // tslint:disable-next-line:max-line-length
   // private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,BEZ,GEN,last_update,cases7_per_100k,BL&returnGeometry=false&outSR=4326&f=json';
-  private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,EWZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county,last_update,cases7_per_100k,recovered,EWZ_BL,cases7_bl_per_100k&returnGeometry=false&outSR=4326&f=json';
+  private api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1=1&outFields=OBJECTID,GEN,BEZ,EWZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county,last_update,cases7_per_100k,recovered,EWZ_BL,cases7_bl_per_100k&returnGeometry=false&outSR=4326&f=json';
 
   private headers: HttpHeaders = new HttpHeaders();
 
@@ -36,7 +36,8 @@ export class RKIService {
 
         this.history.load();
         this.zoneList.zones.forEach(zone => {
-          const historyRecord = new HistoryRecord(toDateTime(zone.updateDate), zone.cases7Per100k, zone.casesPer100k);
+          const historyRecord = new HistoryRecord(toDateTime(zone.updateDate), zone.cases7Per100k, zone.casesPer100k,
+            zone.cases7BlPer100k, zone.deaths);
           this.history.addEntry(zone.id, historyRecord, this.settingsService.settings.numberOfRecords);
         });
         this.history.save();

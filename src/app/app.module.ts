@@ -39,6 +39,8 @@ import {getSettings, SettingsService} from './services/settings-service';
 import {MatSelectModule} from '@angular/material/select';
 import { ZoneSelectionComponent } from './zones/zone-selection/zones-selection.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { ZoneHistoryDeathsComponent } from './zones/zone-history-deaths/zone-history-deaths.component';
+import { ZoneHistoryCases7BlPer100kComponent } from './zones/zone-history-cases7-bl-per100k/zone-history-cases7-bl-per100k.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import {MatMenuModule} from '@angular/material/menu';
     BarGraphComponent,
     ZoneHistoryCases7Per100kComponent,
     SettingsMainComponent,
+    ZoneHistoryDeathsComponent,
+    ZoneHistoryCases7BlPer100kComponent,
   ],
   imports: [
     BrowserModule,

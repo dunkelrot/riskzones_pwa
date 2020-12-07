@@ -4,6 +4,8 @@ interface ISettings {
   numberOfRecords: number;
   interpolateMissingRecords: boolean;
   showCasesTotalPer100k: boolean;
+  showCases7BlPer100k: boolean;
+  showDeaths: boolean;
   theme: string;
   animatedGraphs: boolean;
 }
@@ -13,6 +15,8 @@ export class Settings {
   numberOfRecords = 7;
   interpolateMissingRecords = false;
   showCasesTotalPer100k = true;
+  showCases7BlPer100k = true;
+  showDeaths = true;
   animatedGraphs = false;
 
   // tslint:disable-next-line:variable-name
@@ -33,6 +37,8 @@ export class Settings {
     this.numberOfRecords = 7;
     this.interpolateMissingRecords = false;
     this.showCasesTotalPer100k = true;
+    this.showCases7BlPer100k = true;
+    this.showDeaths = true;
     this.animatedGraphs = false;
     this.theme = 'SYSTEM_DEFAULT';
   }
@@ -42,6 +48,8 @@ export class Settings {
     settings.interpolateMissingRecords = this.interpolateMissingRecords;
     settings.numberOfRecords = this.numberOfRecords;
     settings.showCasesTotalPer100k = this.showCasesTotalPer100k;
+    settings.showCases7BlPer100k = this.showCases7BlPer100k;
+    settings.showDeaths = this.showDeaths;
     settings.theme = this.theme;
     settings.animatedGraphs = this.animatedGraphs;
     localStorage.setItem('settings', JSON.stringify(settings));
@@ -62,6 +70,12 @@ export class Settings {
         }
         if (settings.showCasesTotalPer100k !== undefined) {
           this.showCasesTotalPer100k = settings.showCasesTotalPer100k;
+        }
+        if (settings.showCases7BlPer100k !== undefined) {
+          this.showCases7BlPer100k = settings.showCases7BlPer100k;
+        }
+        if (settings.showDeaths !== undefined) {
+          this.showDeaths = settings.showDeaths;
         }
         if (settings.theme !== undefined) {
           this.theme = settings.theme;
