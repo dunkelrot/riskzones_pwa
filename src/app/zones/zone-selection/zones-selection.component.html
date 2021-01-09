@@ -39,6 +39,13 @@
                            (zoneSelected)="onZoneSelected()"></app-zone-select>
         </cdk-virtual-scroll-viewport>
       </div>
+
+      <div class="crz-select-zones">
+        <button class="crz-zone-save-button" mat-fab color="primary" [disabled]="notDirty" (click)="onSave()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+
     </div>
   </div>
 

@@ -1,3 +1,9 @@
+.crz-zone-save-button {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  z-index: 900;
+}
 
 .crz-search-value {
   padding: 0.6em;
