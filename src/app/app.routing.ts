@@ -13,5 +13,5 @@ const appRoutes: Routes = [
     { path: 'info/:id', component: ZoneInfoComponent },
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' });
 
