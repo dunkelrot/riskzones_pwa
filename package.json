@@ -24,7 +24,7 @@
     "@angular/service-worker": "~11.2.8",
     "luxon": "^1.25.0",
     "marked": "^1.2.2",
-    "rxjs": "~6.6.0",
+    "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
