@@ -41,7 +41,7 @@ export class ZonesListComponent implements OnInit, OnDestroy {
       },
       error => {
         this.zoneList = new ZoneList(false);
-        this.error = error;
+        this.error = 'Keine Daten erhalten.';
         this.alertService.showError('Fehler - Keine oder fehlerhafte Daten erhalten.');
     });
     this.resizeObservable = fromEvent(window, 'resize');
